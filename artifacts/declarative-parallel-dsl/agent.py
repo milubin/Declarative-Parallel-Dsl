@@ -51,8 +51,32 @@ class ParallelAgent:
 
 if __name__ == "__main__":
     agent = ParallelAgent()
+    data = list(range(20))
 
-    agent.run("just run it normally on CPU", list(range(10)))
-    agent.run("square the numbers on CPU", list(range(10)))
-    agent.run("increment then square on CPU", list(range(10)))
-    agent.run("double the numbers on CPU", list(range(10)))
+    print("=" * 50)
+    print("Declarative Parallel DSL — Interactive Agent")
+    print("=" * 50)
+    print("Commands you can try:")
+    print("  square the numbers on CPU")
+    print("  double the numbers on CPU")
+    print("  increment then square on CPU")
+    print("  make this run distributed on Ray")
+    print("  build a pipeline that squares on GPU")
+    print("Type 'quit' to exit.")
+    print(f"Working data: {data}")
+    print("=" * 50)
+
+    while True:
+        try:
+            command = input("\nEnter command: ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nGoodbye!")
+            break
+
+        if not command:
+            continue
+        if command.lower() in ("quit", "exit", "q"):
+            print("Goodbye!")
+            break
+
+        agent.run(command, data)
