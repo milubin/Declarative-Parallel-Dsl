@@ -31,10 +31,44 @@ class ParallelAgent:
     def _choose_backend(self, command: str) -> str:
         cmd = command.lower()
         if re.search(r"ray|distributed|cluster|multi-node", cmd):
+            if not self._is_available("ray"):
+                print("⚠️  Ray is not installed. To use distributed execution, run:")
+                print("       pip install ray[default]")
+                print("   Falling back to CPU.")
+                return "cpu"
             return "ray"
         if re.search(r"gpu|triton|cuda", cmd):
+            if not self._is_available("gpu"):
+                return "cpu"
             return "gpu"
         return "cpu"
+
+    @staticmethod
+    def _is_available(backend: str) -> bool:
+        if backend == "gpu":
+            try:
+                import torch
+                if not torch.cuda.is_available():
+                    print("⚠️  GPU backend requires a CUDA-capable GPU and these packages:")
+                    print("       pip install torch triton")
+                    print("   No GPU detected on this machine. Falling back to CPU.")
+                    return False
+                import triton
+                return True
+            except ImportError as e:
+                missing = str(e).split("'")[1] if "'" in str(e) else str(e)
+                print(f"⚠️  GPU backend requires packages that are not installed.")
+                print(f"   Missing: {missing}")
+                print(f"   Install with: pip install torch triton")
+                print(f"   Falling back to CPU.")
+                return False
+        if backend == "ray":
+            try:
+                import ray
+                return True
+            except ImportError:
+                return False
+        return True
 
     def _execute_graph(self, graph: dict) -> list:
         """Traverse the networkx graph topologically and apply each node's function."""
