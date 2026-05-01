@@ -25,3 +25,16 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - `pnpm --filter @workspace/api-server run dev` — run API server locally
 
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
+
+## Projects
+
+### declarative-parallel-dsl (`artifacts/declarative-parallel-dsl/`)
+Python 3.12 project. Minimal declarative DSL for parallel programming with four backends:
+- **CPU** (`dsl/backends/cpu.py`) — ThreadPoolExecutor, works everywhere
+- **GPU** (`dsl/backends/triton_gpu.py`) — Triton kernel, requires CUDA
+- **Ray** (`dsl/backends/ray_distributed.py`) — distributed cluster via Ray
+- **Cerebras CSL** (`dsl/backends/cerebras_csl.py`) — generates layout.csl + pe_program.csl for WSE-3
+
+Run: `cd artifacts/declarative-parallel-dsl && python3 examples/01_simple_map.py`
+Test: `cd artifacts/declarative-parallel-dsl && python3 tests/test_dsl.py`
+Install (editable): `cd artifacts/declarative-parallel-dsl && pip install -e .`
