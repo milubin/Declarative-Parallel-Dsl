@@ -106,6 +106,32 @@ What it does:
 
 Graph saved to: `examples/agent_graph_confidence.png`
 
+### Persistent memory files
+
+Every time an agent round completes, two files are written to `examples/` automatically:
+
+**`examples/memory_store.json`** — the complete store, all rounds, human-readable:
+```json
+{
+  "round_1": [ { "agent": "Researcher", "confidence": 0.91, ... }, ... ],
+  "round_2": [ ... ],
+  "synthesizer": [ ... ]
+}
+```
+Open it in any text editor. Prior runs are loaded back in and extended on the next run — they are not overwritten.
+
+**`examples/memory_store.db`** — SQLite, one row per agent per round. Query it from the shell:
+```bash
+python3 -c "
+import sqlite3
+con = sqlite3.connect('examples/memory_store.db')
+for r in con.execute('SELECT round_key, agent, confidence FROM agent_results'):
+    print(r)
+"
+```
+
+You can filter by round, sort by confidence, compare runs — standard SQL. Both files are created on the first run if they don't exist, or appended to if they do.
+
 ---
 
 ## Visualization graphs
