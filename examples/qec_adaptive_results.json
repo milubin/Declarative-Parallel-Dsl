@@ -1,0 +1,122 @@
+{
+  "history": [
+    {
+      "noise": 0.02,
+      "shots": 20000,
+      "logical_errors": 15,
+      "logical_error_rate": 0.00075
+    },
+    {
+      "noise": 0.06,
+      "shots": 20000,
+      "logical_errors": 94,
+      "logical_error_rate": 0.0047
+    },
+    {
+      "noise": 0.1,
+      "shots": 20000,
+      "logical_errors": 251,
+      "logical_error_rate": 0.01255
+    },
+    {
+      "noise": 0.14,
+      "shots": 20000,
+      "logical_errors": 484,
+      "logical_error_rate": 0.0242
+    },
+    {
+      "noise": 0.18,
+      "shots": 20000,
+      "logical_errors": 787,
+      "logical_error_rate": 0.03935
+    },
+    {
+      "noise": 0.08,
+      "shots": 20000,
+      "logical_errors": 152,
+      "logical_error_rate": 0.0076
+    },
+    {
+      "noise": 0.12,
+      "shots": 20000,
+      "logical_errors": 367,
+      "logical_error_rate": 0.01835
+    },
+    {
+      "noise": 0.16,
+      "shots": 20000,
+      "logical_errors": 625,
+      "logical_error_rate": 0.03125
+    },
+    {
+      "noise": 0.04,
+      "shots": 20000,
+      "logical_errors": 47,
+      "logical_error_rate": 0.00235
+    }
+  ],
+  "navigator_log": [
+    {
+      "round": 1,
+      "next_noise": 0.06,
+      "confidence": 0.3,
+      "rationale": "With only one data point at noise=0.0200, large gaps remain across the noise range; probing noise=0.0600 helps fill the mid-range and approach the threshold region.",
+      "time": 3.02
+    },
+    {
+      "round": 2,
+      "next_noise": 0.1,
+      "confidence": 0.3,
+      "rationale": "Probing noise=0.1000 targets the threshold region where the code may start failing, and fills a large gap between existing data points.",
+      "time": 1.05
+    },
+    {
+      "round": 3,
+      "next_noise": 0.14,
+      "confidence": 0.4,
+      "rationale": "Probing noise=0.14 fills a gap in the high-noise regime near the threshold where the code starts failing, providing better characterization of the error-rate curve beyond noise=0.10.",
+      "time": 2.45
+    },
+    {
+      "round": 4,
+      "next_noise": 0.18,
+      "confidence": 0.45,
+      "rationale": "Probing noise=0.1800 fills the gap in the high-noise regime near the upper limit of 0.2 and helps characterize the error-rate curve where the code is expected to fail more significantly.",
+      "time": 1.57
+    },
+    {
+      "round": 5,
+      "next_noise": 0.08,
+      "confidence": 0.5,
+      "rationale": "There is a significant gap between 0.0600 and 0.1000, and probing 0.0800 will help better characterize the error-rate curve in the threshold region where the code transitions to higher error rates.",
+      "time": 2.78
+    },
+    {
+      "round": 6,
+      "next_noise": 0.12,
+      "confidence": 0.5,
+      "rationale": "Probing noise=0.1200 fills the gap between 0.1000 and 0.1400, focusing on the threshold region where the code transitions to higher error rates.",
+      "time": 1.25
+    },
+    {
+      "round": 7,
+      "next_noise": 0.16,
+      "confidence": 0.7,
+      "rationale": "The region between 0.1400 and 0.1800 has a significant gap and is near the threshold where the code starts failing, making 0.1600 a strategic point to better characterize the curve.",
+      "time": 1.77
+    },
+    {
+      "round": 8,
+      "next_noise": 0.04,
+      "confidence": 0.45,
+      "rationale": "There is a significant gap between noise=0.0200 and noise=0.0600, and probing at noise=0.0400 will help characterize the error rate behavior in the low-noise regime where the quadratic approximation is most relevant.",
+      "time": 1.47
+    }
+  ],
+  "final_report": {
+    "report": "This study evaluates the performance of a 3-qubit bit-flip repetition code under varying noise levels, with logical error rates measured over 20,000 shots per noise value. The results indicate that the quadratic suppression of errors, approximated by logical_error_rate \u2248 3 * noise^2, holds reasonably well for lower noise levels (e.g., noise=0.02 to 0.08), with measured rates closely aligning with the expected quadratic trend. However, at higher noise levels (noise > 0.1), the logical error rate begins to deviate, suggesting the code's effectiveness diminishes as noise approaches a threshold around 0.12 to 0.14. Beyond this threshold, the error rate increases more rapidly, indicating code failure. To enhance performance, increasing the number of qubits in the repetition code could provide better error suppression, particularly at higher noise levels. Additionally, implementing an improved decoder tailored to handle higher noise regimes may further reduce logical error rates.",
+    "threshold_noise": 0.12,
+    "recommendation": "Increase the number of qubits in the repetition code",
+    "time": 3.68
+  }
+}
