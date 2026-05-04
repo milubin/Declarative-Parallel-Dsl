@@ -227,6 +227,66 @@ This makes it particularly valuable for quantum error correction studies, where 
 
 ---
 
+## Reflexion in the Wild — Popularity and Adoption
+
+The original Reflexion paper (2023) is now considered **foundational** in agentic AI. By 2025–2026, self-reflection and critic loops have moved from "new research idea" to **standard design pattern** — built into almost every major agentic framework.
+
+### How Reflexion Compares to Other Reasoning Techniques
+
+| Technique | Core Idea | Strengths | Weaknesses | When Reflexion Wins |
+|---|---|---|---|---|
+| **ReAct** | Reason → Act → Observe loop | Simple, tool-friendly | No explicit self-correction | When you need critique |
+| **Chain-of-Thought (CoT)** | Step-by-step reasoning | Easy to implement | One-shot, no self-fix | When iteration helps |
+| **Tree-of-Thoughts (ToT)** | Explore multiple reasoning branches | Good exploration | Expensive, no learning from failure | When verbal critique is key |
+| **Self-Consistency** | Sample multiple answers & vote | Reduces hallucinations | No structured critique | When you want learning |
+| **Reflexion / Reflection** | Generate → Critique → Improve | **Strong self-correction & learning** | Extra LLM calls (higher cost/latency) | **Exploratory & high-stakes tasks** |
+
+Reflexion's real edge is **verbal self-critique + memory of past failures**. Agents learn from mistakes in natural language without fine-tuning the model — especially powerful for exploratory science, qualitative reasoning, and tasks with human-readable audit requirements.
+
+### Frameworks and Companies Using It (as of 2026)
+
+**Major frameworks:**
+- **LangGraph** (LangChain) — official "Reflection & Reflexion" examples and built-in support
+- **CrewAI** — critic agents and reflection loops out of the box
+- **AutoGen** — conversational self-critique and iterative refinement
+- **LlamaIndex Agents** — reflection as a standard pattern
+
+**Real-world adoption:**
+Production deployments include code generation & review agents, incident root-cause analysis, legal/contract review, research summarization, and logistics optimization (documented 10–15 % gains from reflection). Large labs (OpenAI, Anthropic) have moved to o1-style "thinking" models that perform implicit self-reflection at scale.
+
+**Bottom line**: Reflexion is not the single most popular technique (ReAct and planning loops still dominate simple agents), but it is one of the most respected advanced patterns for building agents that genuinely improve over time.
+
+---
+
+## What Makes ReflectionAgents Unique
+
+Most existing frameworks implement some form of reflection — but ReflectionAgents combines several capabilities that individually exist elsewhere but are rarely found together.
+
+| Feature | Most Existing Frameworks (LangGraph, CrewAI, AutoGen, etc.) | ReflectionAgents | Why It Matters |
+|---|---|---|---|
+| **Declarative DSL** | Mostly imperative / graph configuration | Single clean high-level DSL | Much easier to learn and teach |
+| **Multiple Backends** | Usually one execution engine (mostly single-node) | CPU, Triton GPU, Ray (distributed), future Cerebras | True hardware flexibility |
+| **Parallel Execution** | Limited or manual | Native parallel agents via Ray | Scales to real workloads |
+| **Built-in Reflection Loops** | Optional add-on or plugin | Core primitive, every example uses it | Reflection is first-class, not bolted on |
+| **Domain-specific simulation** | Generic text / tool agents | Stim QEC integration — real physics simulation | Agents reason over real scientific data |
+| **Adaptive experimentation** | Rare | Navigator agent drives the experiment loop | Autonomous scientific discovery |
+| **Audit trail** | Often missing | Every decision logged + JSON + SQLite | Full reproducibility and traceability |
+| **Visualization** | Basic or absent | NetworkX agent graph PNG per example | Immediate insight into workflow structure |
+
+### The Real Unique Value Proposition
+
+ReflectionAgents is one of the few frameworks that successfully combines:
+
+1. **True declarative programming for agentic workflows** — you write *what* you want, not *how* to orchestrate it
+2. **First-class reflection/critic loops as a core primitive** — not an afterthought
+3. **Real parallel & distributed execution** — via Ray, not simulated concurrency
+4. **Hardware-backend-agnostic design** — CPU → GPU → future wafer-scale (Cerebras WSE-3)
+5. **Domain-grounded agents** — real physics (Stim QEC) rather than toy text tasks
+
+Most popular frameworks are either very easy but not parallel/distributed (CrewAI), or very powerful but complex and low-level (LangGraph). ReflectionAgents sits in the middle: high-level enough to be readable, low-level enough to run real distributed science.
+
+---
+
 ## Agentic Workflow Pattern
 
 ```
