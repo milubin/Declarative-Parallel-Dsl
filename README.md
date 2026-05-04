@@ -62,9 +62,9 @@ Get a key at: **https://console.x.ai** → sign in → **Create API Key**
 ## Installation
 
 ```bash
-cd artifacts/declarative-parallel-dsl
 pip install -e .
-pip install ray        # needed for examples 07 and 08
+pip install ray        # needed for examples 07, 08, 09
+pip install stim       # needed for example 09 (QEC simulation)
 ```
 
 ---
@@ -127,6 +127,34 @@ for r in con.execute('SELECT round_key, agent, confidence FROM agent_results'):
     print(r)
 "
 ```
+
+---
+
+### Example 09 — Quantum Error Correction simulation (Stim + Ray + Grok)
+```bash
+python3 examples/09_qec_agentic_simulation.py
+```
+Runs a **noise-sweep experiment** on a 3-qubit bit-flip repetition code using [Stim](https://github.com/quantumlib/Stim). Four Ray agents each simulate a different noise level (0.5 %, 1 %, 2 %, 4 %), call Grok for scientific analysis, then critique each other in a reflection round. A Synthesizer writes a final scientific report.
+
+What happens step by step:
+1. **Planner** — Grok designs the experiment
+2. **Local sanity check** — Stim runs all 4 noise levels locally and prints raw error rates before any API call
+3. **Parallel agents** — 4 Ray agents each run their own Stim circuit and call Grok for analysis
+4. **Reflection** — each agent critiques prior results and suggests improvements
+5. **Graph** saved to `examples/agent_graph_qec.png`
+6. **Synthesizer** writes the final report with concrete recommendations
+
+Results always saved to `examples/qec_results.json`. Runtime ~40–60 s.
+
+Expected noise-scaling output (confirms the code suppresses single-qubit errors as ~noise²):
+```
+noise=0.005  →  logical_error_rate=0.00010
+noise=0.010  →  logical_error_rate=0.00030
+noise=0.020  →  logical_error_rate=0.00140
+noise=0.040  →  logical_error_rate=0.00560
+```
+
+Requires `pip install stim`.
 
 ---
 
@@ -195,6 +223,7 @@ declarative-parallel-dsl/
 │   ├── 06_agentic_grok_workflow.py      # Grok + CPU
 │   ├── 07_agentic_grok_ray_reflection.py  # Grok + Ray + reflection
 │   ├── 08_confidence_tools_memory.py    # Confidence-gated + tools + memory
+│   ├── 09_qec_agentic_simulation.py     # QEC — Stim + Ray + Grok
 │   └── agent_graph_cpu.png              # sample visualization
 ├── agent.py                     # natural-language CLI
 ├── instructions-agent-grok-ray.md

@@ -150,8 +150,46 @@ Each example saves a PNG diagram of its agent workflow graph to the `examples/` 
 | 06 | Grok + CPU | `examples/agent_graph_grok_cpu.png` |
 | 07 | Grok + Ray | `examples/agent_graph_grok_ray.png` |
 | 08 | Grok + Ray + confidence | `examples/agent_graph_confidence.png` |
+| 09 | Stim + Ray + Grok (QEC) | `examples/agent_graph_qec.png` |
 
 The graphs show how data flows from Planner through parallel agents to Synthesizer, including reflection rounds and the Ray MemoryStore actor in example 08.
+
+---
+
+## Example 09 — Quantum Error Correction (QEC) simulation + Grok + Ray
+
+A noise-sweep experiment on a 3-qubit bit-flip repetition code using [Stim](https://github.com/quantumlib/Stim), with 4 parallel Ray agents analyzing different noise levels, a reflection/critique round, and a Grok-written final scientific report.
+
+```bash
+python3 examples/09_qec_agentic_simulation.py
+```
+
+Requirements:
+- `XAI_API_KEY` set in Replit Secrets
+- `stim` installed (`pip install stim`)
+- `ray` installed
+
+What it does:
+- **Step 1 — Planner**: Grok designs the noise-sweep experiment
+- **Step 2 — Local sanity check**: Stim runs all 4 noise levels locally before dispatching agents
+- **Step 3 — Parallel agents**: 4 Ray agents each run their own Stim simulation (noise: 0.5%, 1%, 2%, 4%) and call Grok for scientific analysis
+- **Step 4 — Reflection**: each agent critiques the prior results and suggests improvements
+- **Step 5 — Graph**: agent network saved to `examples/agent_graph_qec.png`
+- **Step 6 — Synthesizer**: Grok writes a final scientific report with recommendations
+- Results always saved to `examples/qec_results.json`
+- Typical runtime: ~40–60 seconds
+
+Graph saved to: `examples/agent_graph_qec.png`
+Results saved to: `examples/qec_results.json`
+
+The noise-sweep output from the local sanity check looks like:
+```
+noise=0.005  →  logical_error_rate=0.0002
+noise=0.010  →  logical_error_rate=0.0012
+noise=0.020  →  logical_error_rate=0.0050
+noise=0.040  →  logical_error_rate=0.0196
+```
+As expected for a repetition code: logical error rate scales roughly as noise², confirming the code suppresses single-qubit errors.
 
 ---
 
