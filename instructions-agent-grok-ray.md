@@ -1,10 +1,16 @@
 # Running the Agentic Workflow Examples
 
-All commands assume you are in the project root:
+All commands assume you are in the project root (`/home/runner/workspace`).
 
-```bash
-cd artifacts/declarative-parallel-dsl
-```
+## Inspiration
+
+The reflection and critic loops are inspired by the **Reflexion** paper (Shinn et al., 2023):
+
+> **Reflexion: Language Agents with Verbal Reinforcement Learning**
+> Noah Shinn, Federico Cassano, Edward Berman, Ashwin Gopinath, Karthik Narasimhan, Shunyu Yao
+> arXiv:2303.11366 — https://arxiv.org/abs/2303.11366
+
+Rather than updating model weights, Reflexion agents reflect on their prior outputs verbally and produce improved answers on the next pass. This is exactly the mechanism in examples 07–10: each reflection round the agent reads its own previous analysis and is asked to critique and improve it.
 
 ---
 

@@ -186,6 +186,18 @@ Natural-language interface. Type commands like `run cpu`, `run ray`, or `visuali
 
 ---
 
+## Inspiration
+
+The reflection and critic loops in this framework are inspired by the **Reflexion** paper:
+
+> Shinn, N., Cassano, F., Berman, E., Gopinath, A., Narasimhan, K., & Yao, S. (2023).
+> **Reflexion: Language Agents with Verbal Reinforcement Learning.**
+> arXiv:2303.11366. https://arxiv.org/abs/2303.11366
+
+Reflexion introduced the idea of agents generating verbal self-critiques and using them to improve future outputs — the same mechanism driving the reflection rounds in examples 07, 08, 09, and 10. Rather than updating model weights, agents reflect on their prior output in natural language and produce a better answer on the next pass.
+
+---
+
 ## Agentic Workflow Pattern
 
 ```
