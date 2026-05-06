@@ -484,6 +484,8 @@ Check for:
 - Conflicting parameters (e.g. retreat + burst simultaneously)
 - Out-of-range values
 - Diminishing returns (already near ceiling)
+- Attribution risk: if multiple parameters are changing simultaneously this round,
+  note whether they could be staggered to isolate which change is driving the result
 
 Reply ONLY with valid JSON:
 {{
@@ -752,7 +754,9 @@ Write a concise report (4-6 sentences) covering:
 1. How much the enemy improved (win rate change)
 2. Which parameter changes had the biggest impact and why
 3. What kind of player the final enemy is most dangerous against
-4. One further improvement that would make it even stronger
+4. One further improvement that would make it even stronger — but only recommend
+   parameters that actually changed during the run or are directly supported by
+   the episode data; do not suggest parameters that were never exercised
 
 Reply ONLY with valid JSON:
 {{
@@ -835,9 +839,9 @@ if __name__ == "__main__":
     print(report.get("report", report))
     print(f"\n  Biggest impact : {report.get('biggest_impact', '')}")
     print(f"  Player weakness: {report.get('player_weakness', '')}")
+    delta = round(final_metrics['win_rate'] - baseline['win_rate'], 3)
     print(f"\n  Win rate  : {baseline['win_rate']} → {final_metrics['win_rate']}"
-          f"  ({'+' if final_metrics['win_rate'] >= baseline['win_rate'] else ''}"
-          f"{round(final_metrics['win_rate'] - baseline['win_rate'], 3):+.3f})")
+          f"  ({delta:+.3f})")
     print(f"  Avg damage: {baseline['avg_damage']} → {final_metrics['avg_damage']}")
     print(f"  Rounds run: {n_rounds}")
     print(f"  Final policy: {final_policy}")
