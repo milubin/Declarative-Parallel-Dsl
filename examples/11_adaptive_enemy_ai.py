@@ -435,6 +435,10 @@ Your job:
 3. Rate your confidence (0–1) that the selected changes will improve win_rate
 4. Note: win_rate={metrics['win_rate']}, aim > 0.5 eventually
 
+Attribution discipline: if win_rate is already above 0.4 and showing clear improvement,
+prefer 1-2 changes over 3. Fewer simultaneous changes let the next round reason over
+cleaner causal evidence — you'll know which change actually moved the needle.
+
 Stop condition: if confidence >= 0.82 AND win_rate >= 0.4, declare the policy good.
 
 Reply ONLY with valid JSON:
@@ -730,9 +734,18 @@ def adaptive_enemy_loop():
         print(f"  New metrics: win_rate={metrics['win_rate']}  "
               f"avg_dmg={metrics['avg_damage']}  avg_turns={metrics['avg_turns']}")
 
-        if nav["stop"] or nav["confidence"] >= CONFIDENCE_THRESHOLD:
-            print(f"\n  ✅ Navigator satisfied (conf={nav['confidence']:.3f}) — stopping.")
+        # Only honour the Navigator's stop signal if the observed post-eval
+        # metrics actually support it — prevents stopping on a regression
+        # caused by the very changes the Navigator just declared "good enough".
+        nav_wants_stop = nav["stop"] or nav["confidence"] >= CONFIDENCE_THRESHOLD
+        results_support_stop = metrics["win_rate"] >= 0.4
+        if nav_wants_stop and results_support_stop:
+            print(f"\n  ✅ Navigator satisfied (conf={nav['confidence']:.3f},"
+                  f" win_rate={metrics['win_rate']}) — stopping.")
             break
+        elif nav_wants_stop and not results_support_stop:
+            print(f"\n  ⚠️  Navigator wanted to stop (conf={nav['confidence']:.3f})"
+                  f" but observed win_rate={metrics['win_rate']} < 0.4 — continuing.")
 
     return log, policy, metrics
 
