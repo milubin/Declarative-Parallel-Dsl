@@ -508,8 +508,14 @@ Reply ONLY with valid JSON:
 {{
   "verdict":   "approve" | "modify" | "reject",
   "comment":   "<1-2 sentence critique>",
-  "override":  {{"param": "<name>", "new_value": <val>}} or null
-}}"""
+  "override":  {{"param": "<name>", "new_value": <val>}} or null,
+  "defer":     true | false
+}}
+Set "defer": true if attribution risk is high enough that this specific change
+should be skipped this round entirely (not just flagged). The change will be
+dropped from the applied policy and can be re-proposed next round with cleaner
+causal evidence. Use this when landing the change now would make the next round's
+reasoning impossible to interpret."""
 
     resp = client.chat.completions.create(
         model="grok-3",
@@ -523,6 +529,7 @@ Reply ONLY with valid JSON:
         "verdict":  parsed.get("verdict", "approve"),
         "comment":  parsed.get("comment", ""),
         "override": parsed.get("override"),
+        "defer":    bool(parsed.get("defer", False)),
         "time":     round(time.time() - start, 2),
     }
 
@@ -706,16 +713,32 @@ def adaptive_enemy_loop():
         ]
         critiques = ray.get(critic_futures) if critic_futures else []
 
-        # Apply overrides from critics
+        # Apply overrides / deferrals from critics
+        # A majority defer vote on a change removes it from this round entirely.
+        from collections import defaultdict
+        defer_votes: dict = defaultdict(int)
+        total_critics = len(critiques)
         final_changes = list(nav["apply"])
+
         for crit, ch in zip(critiques, final_changes):
-            print(f"  [{crit['critic']}] verdict={crit['verdict']}  {crit['comment']}")
+            defer_tag = " [DEFER]" if crit.get("defer") else ""
+            print(f"  [{crit['critic']}] verdict={crit['verdict']}{defer_tag}  {crit['comment']}")
+            if crit.get("defer"):
+                defer_votes[ch["param"]] += 1
             if crit["verdict"] == "modify" and crit.get("override"):
                 ov = crit["override"]
                 for fc in final_changes:
                     if fc["param"] == ov["param"]:
                         fc["new_value"] = ov["new_value"]
                         print(f"    Override: {ov['param']} → {ov['new_value']}")
+
+        # Drop any change where the majority of critics voted to defer
+        deferred_params = {p for p, votes in defer_votes.items()
+                           if votes > total_critics / 2}
+        if deferred_params:
+            for p in deferred_params:
+                print(f"    Deferred (majority critic vote): {p} — skipped this round")
+            final_changes = [fc for fc in final_changes if fc["param"] not in deferred_params]
 
         # ── Step 4: Apply policy, evaluate ───────────────────────────────────
         policy  = apply_changes(policy, final_changes)
