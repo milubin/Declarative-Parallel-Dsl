@@ -466,26 +466,39 @@ Reply ONLY with valid JSON:
 # ── Critic / reflection ────────────────────────────────────────────────────────
 
 @ray.remote
-def critic_agent(role: str, suggestion: Dict, metrics: Dict, policy: Dict) -> Dict:
+def critic_agent(role: str, suggestion: Dict, metrics: Dict, policy: Dict,
+                 other_changes: List) -> Dict:
     import os, time
     from openai import OpenAI
 
     client = OpenAI(api_key=os.getenv("XAI_API_KEY"), base_url="https://api.x.ai/v1")
     start  = time.time()
 
+    concurrency_note = ""
+    if other_changes:
+        others = ", ".join(
+            f"{c['param']}→{c['new_value']}" for c in other_changes
+        )
+        concurrency_note = (
+            f"\nOther changes landing this same round: {others}"
+            f"\nAttribution risk: {len(other_changes)+1} parameters changing at once."
+            f" If win rate improves, we won't know which change caused it."
+            f" Consider whether this specific change could be deferred to isolate effects."
+        )
+
     prompt = f"""You are a critic reviewing a proposed enemy AI policy change.
 
 Proposed change: {json.dumps(suggestion)}
 Current metrics: {json.dumps(metrics)}
-Current policy:  {json.dumps(policy)}
+Current policy:  {json.dumps(policy)}{concurrency_note}
 
 Is this change well-reasoned? Will it actually improve enemy win rate?
 Check for:
 - Conflicting parameters (e.g. retreat + burst simultaneously)
 - Out-of-range values
 - Diminishing returns (already near ceiling)
-- Attribution risk: if multiple parameters are changing simultaneously this round,
-  note whether they could be staggered to isolate which change is driving the result
+- Attribution risk: flag if multiple simultaneous changes make it impossible to
+  isolate which one drove the result (see concurrency note above)
 
 Reply ONLY with valid JSON:
 {{
@@ -682,7 +695,8 @@ def adaptive_enemy_loop():
         critic_futures = [
             critic_agent.remote(
                 f"Critic-{agent_defs[i % len(agent_defs)][0]}",
-                ch, metrics, policy
+                ch, metrics, policy,
+                [other for other in nav["apply"] if other is not ch]
             )
             for i, ch in enumerate(nav["apply"])
         ]
