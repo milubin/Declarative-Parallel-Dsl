@@ -10,7 +10,7 @@ The reflection and critic loops are inspired by the **Reflexion** paper (Shinn e
 > Noah Shinn, Federico Cassano, Edward Berman, Ashwin Gopinath, Karthik Narasimhan, Shunyu Yao
 > arXiv:2303.11366 — https://arxiv.org/abs/2303.11366
 
-Rather than updating model weights, Reflexion agents reflect on their prior outputs verbally and produce improved answers on the next pass. This is exactly the mechanism in examples 07–11: each reflection round the agent reads its own previous analysis (or episode results) and is asked to critique and improve it.
+Rather than updating model weights, Reflexion agents reflect on their prior outputs verbally and produce improved answers on the next pass. Examples 07–11 all use this pattern, but with increasing sophistication: example 07 runs a single fixed reflection round; examples 08–11 add confidence-gated loops that repeat until the agents collectively decide the output is good enough.
 
 ---
 
@@ -78,7 +78,7 @@ Graph saved to: `examples/agent_graph_grok_ray.png`
 Note: the two Ray warning env vars are set automatically inside the script:
 ```
 RAY_DISABLE_DOCKER_CPU_WARNING=1
-RAY_USE_MULTIPROCESSING_CPU_COUNT=1
+RAY_ACCEL_ENV_VAR_OVERRIDE_ON_ZERO=0
 ```
 
 ---
@@ -286,7 +286,7 @@ The dungeon is a 12×9 snake-corridor map. Enemy always pursues via BFS (no aggr
 3. **Navigator** — meta-agent sees all 4 analyses, resolves conflicts, selects the 1–2 highest-leverage parameter changes, rates its own confidence
 4. **Reflection round** — one critic agent per proposed change validates or overrides it
 5. **Policy applied** — `apply_changes()` clamps all values to `POLICY_BOUNDS`, then `evaluate_policy()` re-runs 12 episodes
-6. Loop repeats until `Navigator.confidence ≥ 0.82` **and** `win_rate ≥ 0.4`, or after 7 rounds
+6. Loop repeats until the Navigator sets `stop=true` or `confidence ≥ 0.82`, or after 7 rounds
 
 ### Stop condition and confidence gating
 
@@ -299,7 +299,7 @@ if nav["stop"] or nav["confidence"] >= CONFIDENCE_THRESHOLD:
     break
 ```
 
-The Navigator sets `"stop": true` in its JSON when it believes the policy is strong enough; the outer loop also hard-stops at 7 rounds.
+The outer Python loop only checks two things: `nav["stop"]` and `nav["confidence"]`. The Navigator's prompt tells it to set `"stop": true` when it judges the policy strong enough — its prompt suggests using `confidence ≥ 0.82` *and* `win_rate ≥ 0.4` as a heuristic, but that reasoning happens inside the LLM call, not in the loop itself. The loop hard-stops at 7 rounds regardless.
 
 ### Outputs
 
