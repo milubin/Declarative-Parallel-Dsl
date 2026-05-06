@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ title }}</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: #0a0810;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    color: #ccc;
+    user-select: none;
+    outline: none;
+  }
+
+  h1 {
+    color: #ffd700;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  #game-wrap {
+    position: relative;
+    border: 2px solid #4a3060;
+    border-radius: 4px;
+    box-shadow: 0 0 40px rgba(160,80,220,0.35);
+    line-height: 0;
+    cursor: pointer;
+  }
+
+  #game-frame {
+    display: block;
+    width: min(960px, 100vw);
+    height: auto;
+    image-rendering: pixelated;
+  }
+
+  /* Click-to-focus overlay — shown until first click */
+  #overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.72);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    transition: opacity 0.15s;
+  }
+  #overlay.hidden { display: none; }
+
+  #overlay p {
+    color: #ffd700;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  #overlay small { color: #aaa; font-size: 0.8rem; }
+
+  #status-bar {
+    margin-top: 8px;
+    font-size: 0.72rem;
+    color: #443355;
+    text-align: center;
+    height: 16px;
+  }
+
+  #controls {
+    margin-top: 4px;
+    font-size: 0.72rem;
+    color: #443355;
+    text-align: center;
+  }
+</style>
+</head>
+<body tabindex="0" id="body">
+
+<h1>&#9876; PyRPG — Adventure Begins</h1>
+
+<div id="game-wrap">
+  <img id="game-frame" src="/stream" alt="PyRPG">
+  <div id="overlay">
+    <p>&#9654; Click to Play</p>
+    <small>Then use your keyboard to control the game</small>
+  </div>
+</div>
+
+<div id="status-bar"></div>
+<div id="controls">
+  WASD / Arrows: Move &nbsp;|&nbsp; E: Talk &nbsp;|&nbsp; Enter / Space: Confirm &nbsp;|&nbsp; ESC: Quit
+</div>
+
+<script>
+  const overlay   = document.getElementById('overlay');
+  const gameWrap  = document.getElementById('game-wrap');
+  const statusBar = document.getElementById('status-bar');
+  const body      = document.getElementById('body');
+
+  let focused = false;
+
+  // ── Focus management ──────────────────────────────────────────────
+  function activate() {
+    focused = true;
+    overlay.classList.add('hidden');
+    body.focus();
+    statusBar.textContent = '✓ Keyboard active';
+    setTimeout(() => { statusBar.textContent = ''; }, 2000);
+  }
+
+  gameWrap.addEventListener('click', activate);
+  gameWrap.addEventListener('touchstart', e => { e.preventDefault(); activate(); });
+
+  // Re-focus if window gets focus
+  window.addEventListener('focus', () => { if (focused) body.focus(); });
+
+  // ── Key → pygame key code map ─────────────────────────────────────
+  const KEY_MAP = {
+    'ArrowLeft':  'ArrowLeft',
+    'ArrowRight': 'ArrowRight',
+    'ArrowUp':    'ArrowUp',
+    'ArrowDown':  'ArrowDown',
+    'KeyA': 'KeyA', 'KeyD': 'KeyD',
+    'KeyW': 'KeyW', 'KeyS': 'KeyS',
+    'KeyE': 'KeyE', 'KeyZ': 'KeyZ',
+    'Enter': 'Enter', 'Space': 'Space', 'Escape': 'Escape',
+    // Also accept numpad enter
+    'NumpadEnter': 'Enter',
+  };
+
+  const GAME_CODES = new Set(Object.keys(KEY_MAP));
+
+  function sendKey(code, pressed) {
+    const mappedCode = KEY_MAP[code];
+    if (!mappedCode) return;
+    fetch('/input', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: mappedCode, pressed })
+    }).catch(() => {});
+  }
+
+  // ── Keyboard listeners ────────────────────────────────────────────
+  // Listen on both document and window so events are never missed
+  function onKeyDown(e) {
+    if (!focused) return;
+    if (GAME_CODES.has(e.code)) {
+      e.preventDefault();
+      e.stopPropagation();
+      sendKey(e.code, true);
+    }
+  }
+  function onKeyUp(e) {
+    if (!focused) return;
+    if (GAME_CODES.has(e.code)) {
+      e.preventDefault();
+      sendKey(e.code, false);
+    }
+  }
+
+  document.addEventListener('keydown', onKeyDown, true);
+  document.addEventListener('keyup',   onKeyUp,   true);
+  window.addEventListener('keydown',   onKeyDown, true);
+  window.addEventListener('keyup',     onKeyUp,   true);
+
+  // ── Auto-activate when page gets keyboard focus ───────────────────
+  document.addEventListener('keydown', e => {
+    if (!focused && GAME_CODES.has(e.code)) {
+      activate();
+      sendKey(e.code, true);
+      e.preventDefault();
+    }
+  }, { capture: false });
+
+</script>
+</body>
+</html>
