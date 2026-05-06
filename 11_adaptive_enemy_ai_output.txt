@@ -30,43 +30,38 @@ ROUND 1 — 4 analyst agents in parallel
 
   Analyst results:
 
-  [Tactician] conf=0.75  (5.1s)
-    As a Tactician focused on attack timing and burst behavior, the low win rate and moderate damage output suggest the enemy is not capitalizing on critical opportunities to pressure the player. Increasing crit_chance will boost damage potential, while a modest burst_threshold will enable aggressive pursuit when the player is vulnerable.
-    → crit_chance = 0.2  (Higher critical hit probability will increase damage output and improve win potential without requiring complex tactical shifts.)
-    → burst_threshold = 0.3  (Enabling sprint behavior when player HP is below 30% will allow the enemy to close in and finish weakened opponents more effectively.)
+  [Tactician] conf=0.85  (10.99s)
+    As a Tactician, I observe that the enemy's win rate and average damage are very low, indicating ineffective combat engagement. The current critical hit chance is minimal with no recorded crits, and there's no burst behavior to capitalize on a weakened player.
+    → crit_chance = 0.25  (Increasing crit_chance from 0.1 to 0.25 will significantly boost damage output through more frequent critical hits, improving win potential.)
+    → burst_threshold = 0.3  (Setting burst_threshold to 0.3 allows the enemy to sprint and close distance when the player's HP is low, increasing the chance to finish them off quickly.)
 
-  [Pathfinder] conf=0.75  (7.13s)
-    From a movement optimization perspective, the enemy's low win rate and moderate damage output suggest a lack of effective positioning and aggression. Increasing the flank_weight will encourage the enemy to take advantageous positions, potentially increasing damage and win rate by catching the player off-guard. Additionally, a slight boost in speed could improve pursuit and engagement frequency.
-    → flank_weight = 0.5  (Encourages flanking to gain positional advantage and increase hit success or critical opportunities.)
-    → speed = 2  (Increases pursuit capability to close distance faster and engage more often.)
+  [Pathfinder] conf=0.85  (4.96s)
+    From a movement optimization perspective, the enemy's low win rate and moderate damage output suggest a lack of effective positioning and aggression. Increasing the flank_weight will encourage the enemy to take advantageous positions, potentially increasing damage and control over the battlefield. Additionally, a higher burst_threshold can enable more aggressive pursuit when the player is weakened, improving win chances.
+    → flank_weight = 0.7  (Encourages flanking to gain positional advantage, likely increasing damage and win rate by attacking from unexpected angles.)
+    → burst_threshold = 0.3  (Allows the enemy to sprint when the player’s HP is low, capitalizing on weakness to secure kills.)
 
-  [Predictor] conf=0.75  (5.72s)
-    Given the low win rate of 0.083 and average damage of 72.0, the enemy AI appears to be too passive and predictable in its approach. The player likely exploits straightforward chase patterns and the enemy's inability to capitalize on critical hits or positional advantages.
-    → attack_bonus = 5  (Increasing attack bonus will boost damage output per hit, helping to pressure the player more effectively and increase win rate.)
-    → flank_weight = 0.5  (Introducing moderate flanking behavior will make the enemy's movement less predictable, potentially catching the player off guard and creating better attack opportunities.)
+  [Predictor] conf=0.85  (6.6s)
+    Given the low win rate of 0.083 and average damage of 72.0, the enemy AI appears to be too passive and predictable, failing to pressure the player effectively. The lack of critical hits and minimal strategic movement suggests the player can easily anticipate and counter the enemy's actions.
+    → speed = 2  (Increasing speed to 2 allows the enemy to close distance faster, reducing the player's ability to kite or escape, thus increasing pressure and potential damage output.)
+    → crit_chance = 0.25  (Raising crit_chance to 0.25 boosts the enemy's threat level by increasing the likelihood of high-damage critical hits, forcing the player to play more defensively.)
 
-  [Historian] conf=0.75  (5.83s)
-    From a historical perspective, the low win rate of 0.083 and average damage of 72.0 suggest that the enemy lacks the aggression and tactical adaptability needed to overpower the player. The complete absence of critical hits and minimal strategic movement (no flanking or retreating) mirrors historical military failures due to predictable and passive approaches.
-    → attack_bonus = 5  (Increasing attack bonus will boost damage output per hit, reflecting historical tactics of overwhelming force to improve win rate.)
-    → crit_chance = 0.2  (Raising critical hit chance will introduce more impactful strikes, akin to decisive historical maneuvers that turned battles.)
+  [Historian] conf=0.75  (11.36s)
+    From a historical perspective, the low win rate and moderate damage output suggest that the enemy lacks both aggression and tactical adaptability in combat. The absence of critical hits and minimal strategic movement indicates that the enemy is not capitalizing on opportunities to exploit player weaknesses or position effectively.
+    → attack_bonus = 5  (Increasing attack bonus will enhance damage output per hit, addressing the need for higher average damage and potentially improving win rate through more aggressive encounters.)
+    → flank_weight = 0.5  (Introducing a moderate flanking strategy will allow the enemy to position more effectively, potentially catching players off guard and increasing win chances through tactical surprise.)
 
   Navigator deciding best changes...
-  Navigator conf=0.780  stop=False
-  Rationale: Focus on increasing damage output and tactical unpredictability through crit_chance, attack_bonus, and flank_weight to address the low win rate of 0.083. These changes balance aggression and strategy for maximum impact.
-  Apply: crit_chance = 0.2  (Increases damage potential through higher critical hit probability, addressing low win rate and lack of impactful strikes as noted by Tactician and Historian.)
-  Apply: flank_weight = 0.5  (Encourages positional advantage to make enemy behavior less predictable and improve attack success, supported by Pathfinder and Predictor.)
-  Apply: attack_bonus = 5  (Boosts damage output per hit to pressure the player more effectively, a common suggestion from Predictor and Historian to counter low win rate.)
+  Navigator conf=0.800  stop=False
+  Rationale: Focusing on crit_chance and burst_threshold targets immediate damage improvement and tactical aggression to address the very low win rate.
+  Apply: crit_chance = 0.25  (Increasing critical hit chance is a high-impact change to boost damage output, as suggested by Tactician and Predictor, addressing the current lack of crits.)
+  Apply: burst_threshold = 0.3  (Setting burst threshold allows aggressive pursuit when player HP is low, a common suggestion by Tactician and Pathfinder, to capitalize on player weakness.)
 
   Reflection — critics validate proposed changes...
-  [Critic-Tactician] verdict=modify [DEFER]  The increase in crit_chance from 0.1 to 0.2 is reasonable to boost damage potential given the low win rate and lack of critical hits, but attribution risk is high with three simultaneous changes.
-  [Critic-Pathfinder] verdict=modify [DEFER]  The flank_weight change is well-reasoned to improve positional advantage and unpredictability, but attribution risk is high with 3 concurrent changes.
-  [Critic-Predictor] verdict=modify [DEFER]  The attack_bonus increase is reasonable to pressure players given the low win rate, but attribution risk is high with three simultaneous changes.
-    Deferred (majority critic vote): flank_weight — skipped this round
-    Deferred (majority critic vote): attack_bonus — skipped this round
-    Deferred (majority critic vote): crit_chance — skipped this round
+  [Critic-Tactician] verdict=approve  The increase in crit_chance from 0.1 to 0.25 is a reasonable high-impact change to address the lack of critical hits, and it does not conflict with the simultaneous burst_threshold change.
+  [Critic-Pathfinder] verdict=approve  The change to burst_threshold is well-reasoned to exploit player weakness at low HP, and no conflicting parameters or out-of-range values are present; while attribution risk exists with the simultaneous crit_chance change, it is moderate and does not warrant deferral.
 
-  Updated policy: {'speed': 1, 'attack_bonus': 0, 'crit_chance': 0.1, 'flank_weight': 0.0, 'burst_threshold': 0.0, 'retreat_hp_pct': 0.0}
-  New metrics: win_rate=0.083  avg_dmg=72.0  avg_turns=19.9
+  Updated policy: {'speed': 1, 'attack_bonus': 0, 'crit_chance': 0.25, 'flank_weight': 0.0, 'burst_threshold': 0.3, 'retreat_hp_pct': 0.0}
+  New metrics: win_rate=0.083  avg_dmg=79.9  avg_turns=19.9
 
 ────────────────────────────────────────────────────────────
 ROUND 2 — 4 analyst agents in parallel
@@ -74,43 +69,39 @@ ROUND 2 — 4 analyst agents in parallel
 
   Analyst results:
 
-  [Tactician] conf=0.85  (4.7s)
-    As a Tactician, I observe that the enemy's win rate and damage output are extremely low, indicating a lack of aggression and opportunistic behavior in combat. The current settings show minimal critical hits and no burst or retreat mechanics, which limits the enemy's ability to capitalize on player vulnerabilities.
-    → crit_chance = 0.25  (Increasing critical hit chance will boost damage output significantly, creating more decisive combat encounters and increasing win rate.)
-    → burst_threshold = 0.3  (Enabling burst behavior when player HP is below 30% will allow the enemy to close in quickly for the kill, improving win potential in critical moments.)
+  [Tactician] conf=0.85  (6.74s)
+    Given the low win rate of 0.083 and average damage of 79.9, the enemy AI is struggling to close out fights effectively, likely due to insufficient aggression and poor timing in critical moments. Focusing on attack timing and burst behavior, increasing the burst threshold will allow the AI to capitalize on weakened players more aggressively.
+    → burst_threshold = 0.5  (Increasing burst threshold to 0.5 ensures the enemy sprints when the player is at half health or below, improving pursuit and finishing potential.)
+    → speed = 2  (Setting speed to 2 allows consistent sprinting, enhancing the ability to close gaps and pressure the player more effectively.)
 
-  [Pathfinder] conf=0.80  (3.79s)
-    From a movement optimization perspective, the enemy's low win rate and damage output suggest insufficient aggression and poor positioning. Increasing speed to close distance faster and introducing a flank weight will improve the enemy's ability to engage and deal damage effectively.
-    → speed = 2  (Doubling speed to 2 allows faster pursuit, reducing turns to engage and increasing damage opportunities.)
-    → flank_weight = 0.5  (A moderate flank weight encourages positioning for tactical advantage, potentially increasing hit success and damage.)
+  [Pathfinder] conf=0.75  (9.61s)
+    From a movement optimization perspective, the enemy’s low win rate and moderate damage output suggest a lack of effective positioning and aggression. Increasing the flank_weight will encourage the enemy to take advantageous positions, potentially increasing damage and win chances by catching the player off-guard. Additionally, a slight increase in burst_threshold will enable more aggressive pursuit when the player is weakened, improving kill potential.
+    → flank_weight = 0.5  (Encourages flanking to gain positional advantage, likely increasing damage and win rate by exploiting player vulnerabilities.)
+    → burst_threshold = 0.4  (Triggers sprinting when player HP is low, enhancing pursuit and finishing potential during critical moments.)
 
-  [Predictor] conf=0.75  (5.0s)
-    Given the low win rate of 0.083 and average damage of 72.0, the enemy AI appears to be too passive and predictable, failing to close in on the player or exploit vulnerabilities. The player likely maintains distance or outmaneuvers the enemy, as seen in the high average player HP at the end (28.0) and long fight duration (19.9 turns).
-    → speed = 2  (Increasing speed to 2 allows the enemy to close distance faster, reducing the player's ability to kite or escape.)
-    → attack_bonus = 5  (A moderate increase in attack bonus will boost damage output per hit, pressuring the player more effectively.)
+  [Predictor] conf=0.75  (3.66s)
+    Given the low win rate of 0.083 and stagnant damage output, the enemy AI appears too passive and predictable, failing to pressure the player effectively. The lack of critical hits and minimal strategic movement suggests the player can easily anticipate and counter the AI's direct approach.
+    → attack_bonus = 5  (Increasing attack bonus will boost damage output per hit, raising pressure on the player and potentially improving win rate.)
+    → flank_weight = 0.5  (Introducing moderate flanking behavior will make the AI less predictable, forcing the player to adapt to varied positioning.)
 
-  [Historian] conf=0.75  (5.37s)
-    From a historical perspective, the enemy’s consistent low win rate and damage output suggest a lack of aggression and tactical adaptability in past encounters. The minimal critical hits and high average player HP at the end of episodes indicate that the enemy fails to capitalize on opportunities to overwhelm the player quickly.
-    → attack_bonus = 5  (Increasing attack bonus will boost damage output per hit, addressing the low average damage and making each engagement more threatening.)
-    → crit_chance = 0.2  (Raising critical hit chance will introduce more variability and potential for high-damage turns, historically a key factor in turning battles against players.)
+  [Historian] conf=0.75  (6.71s)
+    From a historical perspective, the consistently low win rate of 0.083 across rounds suggests the enemy lacks the aggression and tactical adaptability needed to overpower players. The minimal critical hits and unchanged damage output indicate insufficient offensive pressure, while the lack of strategic movement limits battlefield control.
+    → attack_bonus = 5  (Increasing attack bonus will boost damage output per hit, addressing the stagnant average damage and pressuring players more effectively.)
+    → flank_weight = 0.5  (Introducing moderate flanking behavior will allow the enemy to exploit player positioning, potentially catching them off-guard and increasing win chances.)
 
   Navigator deciding best changes...
-  Navigator conf=0.780  stop=False
-  Rationale: Prioritizing aggression through speed, critical hits, and attack bonus to counter low win rate and damage output. These changes aim to make the enemy more threatening and effective in combat.
-  Apply: speed = 2  (Increasing speed to close distance faster, reducing player ability to kite and increasing engagement opportunities, as supported by Pathfinder and Predictor.)
-  Apply: crit_chance = 0.25  (Boosting critical hit chance to increase damage variability and potential for decisive hits, as strongly recommended by Tactician with high confidence.)
-  Apply: attack_bonus = 5  (Enhancing attack bonus to improve damage per hit, addressing low average damage, as suggested by Predictor and Historian.)
+  Navigator conf=0.800  stop=False
+  Rationale: Focusing on burst_threshold and flank_weight addresses the AI's lack of aggression and predictability, key factors in the low win rate of 0.083.
+  Apply: burst_threshold = 0.5  (Increasing burst threshold to 0.5 ensures the enemy AI becomes more aggressive when the player is at half health, improving finishing potential and addressing the low win rate.)
+  Apply: flank_weight = 0.5  (Encouraging flanking behavior will make the AI less predictable and exploit player positioning, potentially increasing damage and win chances.)
 
   Reflection — critics validate proposed changes...
-  [Critic-Tactician] verdict=modify [DEFER]  The speed increase is well-reasoned to reduce kiting and improve engagement, but attribution risk is high with three concurrent changes; deferring this change would allow clearer causal analysis.
-  [Critic-Pathfinder] verdict=modify [DEFER]  The increase in crit_chance to 0.25 is reasonable to boost damage variability, but attribution risk is high with three simultaneous changes (crit_chance, speed, attack_bonus).
-  [Critic-Predictor] verdict=modify [DEFER]  The attack_bonus increase is well-reasoned to address low average damage, but attribution risk is high with three simultaneous changes (attack_bonus, speed, crit_chance). Deferring this change to a later round will help isolate its impact on win rate.
-    Deferred (majority critic vote): speed — skipped this round
-    Deferred (majority critic vote): attack_bonus — skipped this round
-    Deferred (majority critic vote): crit_chance — skipped this round
+  [Critic-Tactician] verdict=modify [DEFER]  The burst_threshold increase to 0.5 is reasonable to improve finishing potential given the low win rate, but concurrent flank_weight change to 0.5 introduces moderate attribution risk.
+  [Critic-Pathfinder] verdict=approve  The change to flank_weight is well-reasoned to make AI less predictable and exploit positioning, potentially improving win rate; no conflicts or out-of-range issues noted.
+    Deferred (critic vote): burst_threshold — skipped this round
 
-  Updated policy: {'speed': 1, 'attack_bonus': 0, 'crit_chance': 0.1, 'flank_weight': 0.0, 'burst_threshold': 0.0, 'retreat_hp_pct': 0.0}
-  New metrics: win_rate=0.083  avg_dmg=72.0  avg_turns=19.9
+  Updated policy: {'speed': 1, 'attack_bonus': 0, 'crit_chance': 0.25, 'flank_weight': 0.5, 'burst_threshold': 0.3, 'retreat_hp_pct': 0.0}
+  New metrics: win_rate=0.0  avg_dmg=76.0  avg_turns=27.2
 
 ────────────────────────────────────────────────────────────
 ROUND 3 — 4 analyst agents in parallel
@@ -118,43 +109,36 @@ ROUND 3 — 4 analyst agents in parallel
 
   Analyst results:
 
-  [Tactician] conf=0.85  (6.98s)
-    As a Tactician focused on attack timing, crit chance, and burst behavior, I observe that the enemy's win rate and damage output are extremely low, likely due to insufficient aggression and lack of opportunistic behavior. The current critical hit chance is minimal, and there's no burst mechanic to capitalize on a weakened player.
-    → crit_chance = 0.25  (Increasing critical hit chance will boost damage output significantly, improving win rate by landing more impactful hits.)
-    → burst_threshold = 0.3  (Enabling burst behavior when player HP is below 30% will allow the enemy to close in quickly and finish off weakened opponents, increasing win potential.)
+  [Tactician] conf=0.85  (8.5s)
+    As a Tactician, I observe that the enemy's win rate is at 0.0, indicating a failure to close out fights effectively despite decent average damage. The lack of critical hits (avg_crits=0.0) suggests missed opportunities for burst damage, and the burst_threshold might be too low to capitalize on weakened players.
+    → crit_chance = 0.35  (Maximizing crit_chance to 0.35 will increase the likelihood of high-damage strikes, potentially turning fights in our favor.)
+    → burst_threshold = 0.5  (Raising burst_threshold to 0.5 ensures enemies sprint to engage when the player is at half health, improving attack timing and pressure.)
 
-  [Pathfinder] conf=0.85  (4.21s)
-    From a movement optimization perspective, the enemy's low win rate and average damage suggest insufficient aggression and poor positioning. Increasing the flank_weight will encourage the enemy to take advantageous positions, potentially increasing damage output and win rate by catching the player off-guard.
-    → flank_weight = 0.7  (Encourages the enemy to prioritize flanking maneuvers over direct chase, improving positional advantage and potentially increasing damage and win rate.)
-    → speed = 2  (Boosts pursuit speed to close distance faster, synergizing with flanking to pressure the player more effectively.)
+  [Pathfinder] conf=0.75  (13.44s)
+    From a movement optimization perspective, the enemy's inability to close distance or position effectively may be limiting win rates and damage output. Increasing speed to sprint and adjusting the burst threshold could allow the enemy to engage the player more aggressively when they are vulnerable.
+    → speed = 2  (Increasing speed to 2 allows the enemy to close distance faster, improving pursuit and engagement opportunities.)
+    → burst_threshold = 0.4  (Setting a higher burst threshold enables sprinting when the player is at 40% HP, capitalizing on their weakened state for more decisive attacks.)
 
-  [Predictor] conf=0.85  (3.7s)
-    The extremely low win rate of 0.083 and average damage of 72.0 suggest the enemy is not aggressive or effective enough in combat. The player seems to maintain high HP (28.0 at end) and outlasts the enemy over long fights (19.9 turns), indicating a need for faster engagement and higher damage output.
-    → speed = 2  (Increasing speed to 2 allows faster pursuit and engagement, reducing the player's ability to kite or escape.)
-    → attack_bonus = 5  (Boosting attack bonus to 5 increases damage per hit, helping to reduce player HP more quickly.)
+  [Predictor] conf=0.75  (8.32s)
+    Given the consistent low win rate and moderate damage output, the enemy AI appears too predictable or slow to counter the player's tactics. The player may be outmaneuvering or outlasting the enemy, as seen in the increased average turns and sustained player HP at the end of episodes.
+    → speed = 2  (Increasing speed to 2 allows the enemy to close distance faster, reducing the player's ability to kite or escape, potentially increasing win rate.)
+    → attack_bonus = 5  (A moderate boost in attack bonus will increase damage per hit, compensating for the low crit frequency and pushing avg_damage higher.)
 
-  [Historian] conf=0.75  (8.16s)
-    From a historical perspective, the consistently low win rate of 0.083 across all rounds suggests that the enemy lacks the aggression and tactical adaptability needed to overpower the player. The unchanged average damage and high average player HP at the end of encounters indicate that the enemy fails to capitalize on opportunities to press an advantage or disrupt player strategies.
-    → attack_bonus = 5  (Increasing attack_bonus will boost raw damage output, addressing the stagnant average damage and historically low win rate by making each hit more impactful.)
-    → flank_weight = 0.5  (Introducing a moderate flank_weight will encourage tactical positioning, potentially catching players off-guard and disrupting their defensive patterns observed in past encounters.)
+  [Historian] conf=0.75  (7.4s)
+    As a Historian, I note that the enemy's win rate has dropped to 0.0 in the latest round, despite a slight increase in average damage over previous rounds. The extended average turns (27.2) suggest the enemy struggles to close engagements effectively, likely due to insufficient aggression or mobility.
+    → speed = 2  (Increasing speed to 2 allows faster pursuit and engagement, reducing turns to deal damage and potentially increasing win rate.)
+    → attack_bonus = 5  (A moderate boost in attack bonus will enhance damage output per hit, capitalizing on engagements to improve overall effectiveness.)
 
   Navigator deciding best changes...
   Navigator conf=0.800  stop=False
-  Rationale: Focus on increasing aggression and tactical positioning with speed, attack bonus, and flanking to pressure the player and improve win rate. These changes address core weaknesses in engagement and damage output.
-  Apply: speed = 2  (Increasing speed allows faster engagement and pursuit, reducing the player's ability to kite or escape, as supported by Predictor and Pathfinder.)
-  Apply: attack_bonus = 5  (Boosting attack bonus increases damage per hit, addressing low average damage and win rate, as suggested by Predictor and Historian.)
-  Apply: flank_weight = 0.5  (Moderate flank weight encourages tactical positioning to disrupt player defenses, balancing Pathfinder's and Historian's suggestions for optimal impact.)
+  Rationale: Focusing on a single change to speed addresses the core issue of mobility, which multiple agents identified as critical to reducing average turns and increasing win rate.
+  Apply: speed = 2  (Increasing speed to 2 is a high-impact change to improve pursuit and engagement, addressing the low win rate by reducing the player's ability to kite or escape.)
 
   Reflection — critics validate proposed changes...
-  [Critic-Tactician] verdict=modify [DEFER]  The speed increase is well-reasoned for improving engagement, but attribution risk is high with three concurrent changes; deferring this change would help isolate effects.
-  [Critic-Pathfinder] verdict=modify [DEFER]  The attack_bonus increase is well-reasoned to address low damage and win rate, but attribution risk is high with three concurrent changes (attack_bonus, speed, flank_weight).
-  [Critic-Predictor] verdict=modify [DEFER]  The flank_weight change is well-reasoned to encourage tactical positioning, but attribution risk is high with three concurrent changes; deferring is necessary to isolate impact.
-    Deferred (majority critic vote): speed — skipped this round
-    Deferred (majority critic vote): attack_bonus — skipped this round
-    Deferred (majority critic vote): flank_weight — skipped this round
+  [Critic-Tactician] verdict=approve  The proposed speed increase to 2 is well-reasoned to address the low win rate by reducing player kiting, and no conflicting parameters or out-of-range values are present.
 
-  Updated policy: {'speed': 1, 'attack_bonus': 0, 'crit_chance': 0.1, 'flank_weight': 0.0, 'burst_threshold': 0.0, 'retreat_hp_pct': 0.0}
-  New metrics: win_rate=0.083  avg_dmg=72.0  avg_turns=19.9
+  Updated policy: {'speed': 2, 'attack_bonus': 0, 'crit_chance': 0.25, 'flank_weight': 0.5, 'burst_threshold': 0.3, 'retreat_hp_pct': 0.0}
+  New metrics: win_rate=0.083  avg_dmg=78.8  avg_turns=17.1
 
 ────────────────────────────────────────────────────────────
 ROUND 4 — 4 analyst agents in parallel
@@ -162,45 +146,35 @@ ROUND 4 — 4 analyst agents in parallel
 
   Analyst results:
 
-  [Tactician] conf=0.85  (4.86s)
-    From a tactical perspective, the enemy's low win rate and average damage suggest a lack of aggression and opportunistic behavior in combat. Increasing the attack bonus will enhance damage output per hit, while a higher crit chance will introduce more impactful strikes to pressure the player.
-    → attack_bonus = 5  (Boosts damage per attack to increase overall damage dealt and pressure the player more effectively.)
-    → crit_chance = 0.2  (Increases the likelihood of critical hits, adding burst damage potential to capitalize on attack opportunities.)
+  [Tactician] conf=0.85  (8.23s)
+    As a Tactician focusing on attack timing, crit chance, and burst behavior, I note that the current win rate is extremely low at 0.083, and average damage output, while decent, isn't translating to victories. The lack of critical hits (avg_crits=0.0) suggests crit_chance may not be triggering effectively, and the burst_threshold of 0.3 might be too conservative to capitalize on player vulnerability.
+    → crit_chance = 0.35  (Maximizing crit_chance to 0.35 will increase the likelihood of critical hits, boosting damage output and potentially turning close fights into wins.)
+    → burst_threshold = 0.5  (Raising burst_threshold to 0.5 allows the enemy to sprint more aggressively when the player is at half health or below, improving attack timing to close out fights faster.)
 
-  [Pathfinder] conf=0.80  (7.01s)
-    From a movement optimization perspective, the enemy's low win rate and average damage suggest a lack of effective positioning and aggression. Increasing the flank_weight will encourage the enemy to take advantageous positions, potentially increasing damage output and win rate by catching the player off-guard.
-    → flank_weight = 0.7  (Encourages the enemy to prioritize flanking maneuvers over direct chase, improving positional advantage and potentially increasing damage and win chance.)
-    → burst_threshold = 0.3  (Enables sprinting when the player's HP is low, allowing the enemy to close distance quickly for a finishing blow, enhancing win rate.)
+  [Pathfinder] conf=0.75  (6.8s)
+    From a movement optimization perspective, the enemy's low win rate and moderate damage output suggest insufficient pressure on the player due to predictable movement and lack of strategic positioning. Increasing the flank_weight will encourage the enemy to take less direct paths, potentially catching the player off-guard and improving damage opportunities.
+    → flank_weight = 0.8  (Higher flanking priority will make enemy movement less predictable and increase chances of attacking from advantageous positions, boosting win rate and damage.)
 
-  [Predictor] conf=0.85  (5.38s)
-    Given the consistently low win rate of 0.083 and average damage of 72.0 across rounds, the enemy AI appears too passive and unable to close in on or overwhelm the player. The player likely maintains distance or mitigates damage effectively, as seen in the high avg_player_hp_end of 28.0.
-    → speed = 2  (Increasing speed to 2 allows the enemy to close distance faster, countering player kiting or evasion strategies.)
-    → attack_bonus = 5  (A moderate boost in attack bonus will increase damage output per hit, pressuring the player more effectively.)
+  [Predictor] conf=0.85  (7.95s)
+    The consistently low win rate of 0.083 across rounds suggests the enemy is struggling to close out fights effectively, possibly due to insufficient aggression or inability to capitalize on player vulnerabilities. The lack of critical hits (avg_crits=0.0) indicates missed opportunities for burst damage, and the high avg_player_hp_end (21.2) shows the enemy isn't finishing fights efficiently.
+    → attack_bonus = 5  (Increasing attack_bonus will boost raw damage output per hit, helping to reduce player HP faster and improve win rate.)
+    → crit_chance = 0.35  (Raising crit_chance to the maximum will increase the likelihood of high-damage critical hits, compensating for the current lack of burst and potentially turning fights in the enemy's favor.)
 
-  [Historian] conf=0.75  (4.52s)
-    From a historical perspective, the consistently low win rate of 0.083 across all rounds suggests that the enemy lacks the aggression and tactical adaptability needed to overcome the player. The unchanged parameters and stagnant damage output indicate a failure to capitalize on opportunities to pressure the player effectively.
-    → attack_bonus = 5  (Increasing attack_bonus will boost damage output per hit, addressing the low average damage and improving win potential by making each engagement more impactful.)
-    → speed = 2  (Doubling speed to 2 allows the enemy to close distance faster or pursue more effectively, historically a key factor in overwhelming opponents before they can recover.)
+  [Historian] conf=0.75  (7.52s)
+    From a historical perspective, the consistently low win rate across rounds suggests the enemy struggles to close out fights effectively, despite maintaining decent average damage. The lack of critical hits and high average player HP at the end of episodes indicate insufficient aggression or finishing power in combat.
+    → attack_bonus = 5  (Increasing attack_bonus will boost raw damage output, addressing the enemy's inability to finish fights and potentially increasing win rate.)
+    → crit_chance = 0.3  (A higher crit_chance will introduce more burst damage potential, compensating for the current zero average critical hits and helping to overwhelm players faster.)
 
   Navigator deciding best changes...
-  Navigator conf=0.820  stop=False
-  Rationale: Focus on increasing aggression and damage potential with speed, attack bonus, and crit chance to address the low win rate and improve combat effectiveness.
-  Apply: speed = 2  (Increasing speed to close distance faster, countering player evasion and improving engagement opportunities.)
-  Apply: attack_bonus = 5  (Boosting damage per hit to increase overall damage output and pressure the player more effectively.)
-  Apply: crit_chance = 0.2  (Enhancing burst damage potential with higher critical hit likelihood to capitalize on attacks.)
+  Navigator conf=0.800  stop=False
+  Rationale: Focusing on a single high-impact change to increase damage output, ensuring clear attribution of results to this adjustment.
+  Apply: attack_bonus = 5  (Boosting raw damage output to address low win rate and improve ability to finish fights, as supported by multiple agents.)
 
   Reflection — critics validate proposed changes...
-  [Critic-Tactician] verdict=modify [DEFER]  The speed increase is well-reasoned to counter player evasion, but attribution risk is high with three simultaneous changes; deferring this change will help isolate the impact of attack_bonus and crit_chance.
-  [Critic-Pathfinder] verdict=modify [DEFER]  The attack_bonus increase is reasonable to boost damage output given the low win rate, but attribution risk is high with three simultaneous changes.
-  [Critic-Predictor] verdict=modify [DEFER]  The increase in crit_chance to 0.2 is reasonable for enhancing burst damage, but attribution risk is high with three simultaneous changes; deferring is necessary to isolate effects.
-    Deferred (majority critic vote): speed — skipped this round
-    Deferred (majority critic vote): attack_bonus — skipped this round
-    Deferred (majority critic vote): crit_chance — skipped this round
+  [Critic-Tactician] verdict=approve  The proposed increase in attack_bonus from 0 to 5 is reasonable given the low win rate of 0.083 and average damage of 78.8, as it directly addresses the enemy's inability to finish fights.
 
-  Updated policy: {'speed': 1, 'attack_bonus': 0, 'crit_chance': 0.1, 'flank_weight': 0.0, 'burst_threshold': 0.0, 'retreat_hp_pct': 0.0}
-  New metrics: win_rate=0.083  avg_dmg=72.0  avg_turns=19.9
-
-  ⚠️  Navigator wanted to stop (conf=0.820) but observed win_rate=0.083 < 0.4 — continuing.
+  Updated policy: {'speed': 2, 'attack_bonus': 5, 'crit_chance': 0.25, 'flank_weight': 0.5, 'burst_threshold': 0.3, 'retreat_hp_pct': 0.0}
+  New metrics: win_rate=0.917  avg_dmg=99.0  avg_turns=16.2
 
 ────────────────────────────────────────────────────────────
 ROUND 5 — 4 analyst agents in parallel
@@ -208,131 +182,38 @@ ROUND 5 — 4 analyst agents in parallel
 
   Analyst results:
 
-  [Tactician] conf=0.85  (9.42s)
-    As a Tactician focusing on attack timing, crit chance, and burst behavior, I note that the current win rate and damage output are very low, indicating ineffective combat engagement. The lack of critical hits and burst behavior suggests missed opportunities for decisive strikes when the player is vulnerable.
-    → crit_chance = 0.25  (Increasing crit chance from 0.1 to 0.25 will significantly boost damage potential per hit, capitalizing on attack opportunities to improve win rate.)
-    → burst_threshold = 0.3  (Setting burst_threshold to 0.3 will enable sprinting for a finishing blow when player HP is low, enhancing kill efficiency and reducing avg_turns.)
+  [Tactician] conf=0.85  (7.64s)
+    Given the high win rate of 0.917 and average damage of 99.0, the enemy is performing well, but the lack of critical hits (avg_crits=0.0) suggests missed opportunities for burst damage. Increasing crit_chance could push damage output higher and secure faster victories. Adjusting burst_threshold slightly upward may also capitalize on weakened players to close out fights more decisively.
+    → crit_chance = 0.35  (Maximizing crit_chance to increase burst damage potential and secure faster kills, as current avg_crits is 0.0.)
+    → burst_threshold = 0.4  (Raising burst_threshold to trigger sprinting more often when player HP is low, ensuring quicker finishes to maintain high win rate.)
 
-  [Pathfinder] conf=0.75  (5.93s)
-    From a movement optimization perspective, the enemy’s current policy lacks aggression and tactical positioning, resulting in a low win rate and limited damage output. Increasing the flank_weight will encourage the enemy to take advantageous positions, potentially increasing damage and win chances. Additionally, introducing a retreat_hp_pct will allow the enemy to preserve itself when critically low on health, potentially extending combat duration for more damage opportunities.
-    → flank_weight = 0.5  (Encourages tactical positioning to attack from unexpected angles, increasing hit success and damage potential.)
-    → retreat_hp_pct = 0.2  (Allows the enemy to retreat when health is low, extending combat time to deal more damage and potentially outlast the player.)
+  [Pathfinder] conf=0.85  (7.68s)
+    From a movement optimization perspective, the high win rate of 0.917 and average damage of 99.0 suggest the enemy is performing well, but there’s room to refine aggression and positioning. Increasing flank_weight could enhance damage output by ensuring the enemy more frequently positions for tactical advantage. Additionally, introducing a small retreat_hp_pct could preserve the enemy longer in close fights, potentially increasing win consistency.
+    → flank_weight = 0.7  (Higher flanking priority will likely increase damage by exploiting player positioning vulnerabilities.)
+    → retreat_hp_pct = 0.2  (A modest retreat threshold will allow the enemy to disengage at low HP, potentially surviving longer to deal more damage or secure wins.)
 
-  [Predictor] conf=0.85  (6.0s)
-    Given the consistently low win rate of 0.083 and average damage of 72.0 across multiple rounds, the enemy AI appears too passive and predictable, failing to close in on or overwhelm the player. The player likely maintains distance or outmaneuvers the enemy, exploiting the lack of speed and tactical aggression.
-    → speed = 2  (Increasing speed to 2 allows the enemy to close distance faster, reducing the player's ability to kite or escape, thus increasing engagement opportunities.)
-    → attack_bonus = 5  (A moderate boost in attack bonus will enhance damage output per hit, capitalizing on closer engagements to pressure the player more effectively.)
+  [Predictor] conf=0.85  (5.88s)
+    Given the high win rate of 0.917 and average damage of 99.0, the enemy AI is performing well, but there is room to push damage output higher by capitalizing on critical hits. The current crit_chance of 0.25 has resulted in zero average crits per episode, suggesting missed opportunities for burst damage.
+    → crit_chance = 0.35  (Increasing crit_chance to the maximum will likely result in more critical hits, boosting average damage output and potentially securing faster wins.)
 
-  [Historian] conf=0.75  (6.16s)
-    From a historical perspective, the consistently low win rate of 0.083 across all rounds suggests that the enemy AI lacks the aggression and tactical adaptability needed to overcome player strategies. The unchanged average damage and turn duration indicate a failure to capitalize on opportunities for decisive strikes or to close engagements effectively.
-    → speed = 2  (Increasing speed to 2 allows the enemy to close distance faster, reducing the player's ability to kite or escape, thus potentially increasing win rate and damage output.)
-    → attack_bonus = 5  (A moderate increase in attack bonus to 5 will enhance damage per hit, addressing the stagnation in average damage and improving the enemy's threat level.)
-
-  Navigator deciding best changes...
-  Navigator conf=0.800  stop=False
-  Rationale: Prioritizing speed, crit chance, and attack bonus to increase aggression and damage output, targeting the root causes of low win rate. These changes balance immediate impact with tactical improvement.
-  Apply: speed = 2  (Increasing speed to close distance faster, addressing low win rate by reducing player's ability to kite, as suggested by Predictor and Historian.)
-  Apply: crit_chance = 0.25  (Boosting crit chance to enhance damage potential per hit, capitalizing on attack opportunities to improve win rate, as suggested by Tactician.)
-  Apply: attack_bonus = 5  (Moderate increase in attack bonus to improve damage output per hit, addressing stagnation in avg_damage, as suggested by Predictor and Historian.)
-
-  Reflection — critics validate proposed changes...
-  [Critic-Tactician] verdict=modify [DEFER]  The speed increase is reasonably justified to address kiting and low win rate, but attribution risk is high with three concurrent changes.
-  [Critic-Pathfinder] verdict=modify [DEFER]  The crit_chance increase to 0.25 is reasonable to boost damage potential given the current low win rate and zero crits, but attribution risk is high with three simultaneous changes.
-  [Critic-Predictor] verdict=modify [DEFER]  The attack_bonus increase is reasonably justified to address stagnant avg_damage, but attribution risk is high with three concurrent changes (attack_bonus, speed, crit_chance).
-    Deferred (majority critic vote): speed — skipped this round
-    Deferred (majority critic vote): attack_bonus — skipped this round
-    Deferred (majority critic vote): crit_chance — skipped this round
-
-  Updated policy: {'speed': 1, 'attack_bonus': 0, 'crit_chance': 0.1, 'flank_weight': 0.0, 'burst_threshold': 0.0, 'retreat_hp_pct': 0.0}
-  New metrics: win_rate=0.083  avg_dmg=72.0  avg_turns=19.9
-
-────────────────────────────────────────────────────────────
-ROUND 6 — 4 analyst agents in parallel
-────────────────────────────────────────────────────────────
-
-  Analyst results:
-
-  [Tactician] conf=0.85  (6.23s)
-    As a Tactician focusing on attack timing, crit chance, and burst behavior, I note that the current win rate and average damage are very low, indicating ineffective combat engagement. The lack of critical hits and burst behavior suggests missed opportunities for high-damage moments and closing gaps on weakened players.
-    → crit_chance = 0.25  (Increasing crit chance from 0.1 to 0.25 will significantly boost damage output by landing more critical hits, directly addressing the low average damage and win rate.)
-    → burst_threshold = 0.3  (Setting burst_threshold to 0.3 will enable enemies to sprint and close distance when the player's HP is low, capitalizing on weakened states to secure more wins.)
-
-  [Pathfinder] conf=0.75  (6.71s)
-    From a movement optimization perspective, the enemy’s current direct chase strategy (flank_weight=0.0) and lack of retreat (retreat_hp_pct=0.0) likely result in predictable behavior and unnecessary deaths. Increasing flank_weight will allow the enemy to position more strategically, potentially catching the player off-guard and increasing damage output. Adding a retreat threshold will preserve the enemy’s life to fight longer and improve win chances.
-    → flank_weight = 0.5  (Encourages flanking to exploit player positioning, increasing attack opportunities and damage.)
-    → retreat_hp_pct = 0.3  (Allows retreat at low HP to avoid death, extending combat duration and potential wins.)
-
-  [Predictor] conf=0.85  (6.77s)
-    Given the consistently low win rate of 0.083 and average damage of 72.0 across multiple rounds, the enemy AI appears too passive and predictable, failing to close in on the player or exploit vulnerabilities. The player likely maintains distance or outmaneuvers the enemy, as seen in high average player HP at the end (28.0) and long fight durations (19.9 turns).
-    → speed = 2  (Increasing speed to 2 allows the enemy to close distance faster, reducing the player's ability to kite or escape, thus increasing engagement and damage opportunities.)
-    → attack_bonus = 5  (A moderate boost in attack_bonus will increase damage output per hit, compensating for the low crit chance and improving overall threat level to pressure the player.)
-
-  [Historian] conf=0.75  (5.85s)
-    From a historical perspective, the consistently low win rate of 0.083 across multiple rounds suggests that the enemy AI lacks the aggression and tactical adaptability needed to overcome the player. The absence of critical hits and minimal damage output indicate that the enemy is not capitalizing on opportunities to deal significant harm or pressure the player effectively.
-    → attack_bonus = 5  (Increasing attack_bonus will boost damage output per hit, addressing the low average damage and making each engagement more threatening to the player.)
-    → crit_chance = 0.2  (Raising crit_chance will introduce more variability and potential for high-damage turns, which could turn the tide in close encounters and improve win rate.)
+  [Historian] conf=0.85  (8.08s)
+    From a historical perspective, the dramatic increase in win_rate from 0.083 to 0.917 in Round 4 correlates with likely aggressive parameter adjustments, as seen in the high average damage of 99.0. However, the lack of critical hits (avg_crits=0.0) suggests missed opportunities for burst damage, and the low player HP at the end (1.0) indicates potential for faster finishes.
+    → crit_chance = 0.35  (Maximizing crit_chance will capitalize on the high attack_bonus to deliver more decisive blows, potentially reducing avg_turns and increasing damage output.)
+    → burst_threshold = 0.5  (Setting burst_threshold to 0.5 will enable sprinting when the player is at half health, ensuring faster closures to secure wins against weakened opponents.)
 
   Navigator deciding best changes...
-  Navigator conf=0.800  stop=False
-  Rationale: Prioritizing speed, crit chance, and attack bonus addresses core issues of engagement, damage output, and threat level to improve win rate significantly.
-  Apply: speed = 2  (Increasing speed will allow the enemy to close distance faster, addressing the player's ability to kite and improving engagement opportunities.)
-  Apply: crit_chance = 0.25  (Higher crit chance will boost damage output through more frequent critical hits, directly tackling the low average damage and win rate.)
-  Apply: attack_bonus = 5  (A moderate attack bonus increase will enhance damage per hit, making the enemy more threatening and compensating for current low damage metrics.)
+  Navigator conf=0.880  stop=True
+  Rationale: Focusing on a single high-impact change to crit_chance to boost damage output and potentially reduce avg_turns, ensuring clear attribution of results.
+  Apply: crit_chance = 0.35  (All agents agree on increasing crit_chance to capitalize on missed burst damage opportunities, as current avg_crits is 0.0.)
 
   Reflection — critics validate proposed changes...
-  [Critic-Tactician] verdict=modify [DEFER]  The speed increase is well-reasoned to counter player kiting, but attribution risk is high with three simultaneous changes; deferring is necessary to isolate impact.
-  [Critic-Pathfinder] verdict=modify [DEFER]  The crit_chance increase to 0.25 is reasonable to boost damage output given the low win rate and avg_damage, but attribution risk is high with three concurrent changes.
-  [Critic-Predictor] verdict=modify [DEFER]  The attack_bonus increase is reasonable given low damage metrics, but attribution risk is high with three simultaneous changes (attack_bonus, speed, crit_chance).
-    Deferred (majority critic vote): speed — skipped this round
-    Deferred (majority critic vote): attack_bonus — skipped this round
-    Deferred (majority critic vote): crit_chance — skipped this round
+  [Critic-Tactician] verdict=modify  Increasing crit_chance from 0.25 to 0.35 is reasonable given avg_crits is 0.0, but the win_rate is already near ceiling at 0.917, suggesting limited room for improvement.
+    Override: crit_chance → 0.3
 
-  Updated policy: {'speed': 1, 'attack_bonus': 0, 'crit_chance': 0.1, 'flank_weight': 0.0, 'burst_threshold': 0.0, 'retreat_hp_pct': 0.0}
-  New metrics: win_rate=0.083  avg_dmg=72.0  avg_turns=19.9
+  Updated policy: {'speed': 2, 'attack_bonus': 5, 'crit_chance': 0.3, 'flank_weight': 0.5, 'burst_threshold': 0.3, 'retreat_hp_pct': 0.0}
+  New metrics: win_rate=0.917  avg_dmg=99.0  avg_turns=16.1
 
-────────────────────────────────────────────────────────────
-ROUND 7 — 4 analyst agents in parallel
-────────────────────────────────────────────────────────────
-
-  Analyst results:
-
-  [Tactician] conf=0.85  (5.47s)
-    As a Tactician focusing on attack timing, crit chance, and burst behavior, I note that the current win rate and damage output are extremely low, suggesting the enemy is not aggressive or effective enough in combat. The lack of critical hits and minimal strategic movement (no flanking or bursting) indicates missed opportunities to pressure the player.
-    → crit_chance = 0.25  (Increasing crit chance from 0.1 to 0.25 will significantly boost damage output by landing more critical hits, directly addressing the low average damage.)
-    → burst_threshold = 0.3  (Setting burst_threshold to 0.3 will enable the enemy to sprint and close distance when the player's HP is low, improving attack timing and increasing win rate by capitalizing on weakened opponents.)
-
-  [Pathfinder] conf=0.75  (9.49s)
-    From a movement optimization perspective, the enemy's low win rate and stagnant damage output suggest a lack of tactical positioning and aggression. Increasing the flank_weight will encourage the enemy to take advantageous positions, potentially increasing damage and win rate by catching the player off-guard. Additionally, introducing a retreat_hp_pct will allow the enemy to preserve itself when critically low on health, potentially extending fights and creating more damage opportunities.
-    → flank_weight = 0.5  (Encourages tactical positioning to attack from unexpected angles, increasing hit chance and damage potential.)
-    → retreat_hp_pct = 0.2  (Allows the enemy to retreat when health is low, potentially prolonging combat and creating more opportunities to deal damage.)
-
-  [Predictor] conf=0.85  (7.03s)
-    Given the consistently low win rate of 0.083 and average damage of 72.0 across multiple rounds, the enemy AI appears too passive and predictable, failing to pressure the player effectively. The player likely exploits the enemy's lack of aggression and slow movement to control engagements.
-    → speed = 2  (Increasing speed to 2 allows the enemy to close distance faster, reducing the player's ability to kite or escape.)
-    → attack_bonus = 5  (A moderate boost in attack bonus will increase damage output per hit, making engagements more threatening to the player.)
-
-  [Historian] conf=0.75  (10.96s)
-    From a historical perspective, the consistently low win rate of 0.083 across multiple rounds suggests that the enemy AI lacks the aggression and tactical adaptability needed to overcome player strategies. The absence of critical hits and minimal damage output indicate that the enemy is not capitalizing on opportunities to deal significant blows or adapt to player positioning.
-    → attack_bonus = 5  (Increasing attack_bonus will enhance damage output per hit, addressing the low average damage and potentially improving win rate by making each attack more threatening.)
-    → crit_chance = 0.2  (Raising crit_chance will introduce more variability and potential for high-damage turns, which historically shifts momentum in battles and counters the current zero critical hits.)
-
-  Navigator deciding best changes...
-  Navigator conf=0.800  stop=False
-  Rationale: Focus on boosting aggression and damage output through speed, crit chance, and attack bonus to counter the enemy's passivity and low win rate.
-  Apply: speed = 2  (Increasing speed allows the enemy to close distance faster, reducing player control over engagements and addressing low win rate.)
-  Apply: crit_chance = 0.25  (Higher crit chance boosts damage output significantly, directly tackling the low average damage and zero critical hits.)
-  Apply: attack_bonus = 5  (A moderate attack bonus increase makes each hit more threatening, improving damage potential and win rate.)
-
-  Reflection — critics validate proposed changes...
-  [Critic-Tactician] verdict=modify [DEFER]  The speed increase is well-reasoned to reduce player control over engagements, but attribution risk is high with three simultaneous changes; deferring this change is necessary to isolate effects of crit_chance and attack_bonus.
-  [Critic-Pathfinder] verdict=modify [DEFER]  The increase in crit_chance to 0.25 is reasonable to address zero critical hits and low damage, but attribution risk is high with three simultaneous changes.
-  [Critic-Predictor] verdict=modify [DEFER]  The attack_bonus increase is reasonable and likely to improve win rate given the low current avg_damage, but attribution risk is high with three concurrent changes.
-    Deferred (majority critic vote): speed — skipped this round
-    Deferred (majority critic vote): attack_bonus — skipped this round
-    Deferred (majority critic vote): crit_chance — skipped this round
-
-  Updated policy: {'speed': 1, 'attack_bonus': 0, 'crit_chance': 0.1, 'flank_weight': 0.0, 'burst_threshold': 0.0, 'retreat_hp_pct': 0.0}
-  New metrics: win_rate=0.083  avg_dmg=72.0  avg_turns=19.9
+  ✅ Navigator satisfied (conf=0.880, win_rate=0.917) — stopping.
 
 ────────────────────────────────────────────────────────────
 Plotting learning curve → examples/enemy_learning_curve.png
@@ -351,18 +232,18 @@ Final report agent...
 ============================================================
 FINAL REPORT
 ============================================================
-The adaptive enemy AI in the dungeon RPG experiment showed no improvement over the 7 reflection rounds, with the win rate remaining stagnant at 0.083 and average damage at 72.0 throughout all rounds. There were no changes in the policy parameters, as all values, including speed, attack bonus, and critical chance, remained constant, resulting in no identifiable impact from any specific parameter. The final enemy, adhering to a basic straight-line chase and random attack strategy, is most dangerous to inexperienced players who fail to anticipate or counter predictable movement patterns. Given the lack of adaptation in the policy, one potential improvement could be to increase the 'speed' parameter, as it was a defined variable in the policy, to allow the enemy to close distances faster and apply pressure more effectively.
+The enemy AI in the dungeon RPG experiment significantly improved over five reflection rounds, with its win rate increasing from 0.083 in Round 0 to 0.917 by Round 5, representing a remarkable 11-fold improvement in effectiveness. The most impactful policy changes were the increase in 'attack_bonus' to 5 and 'speed' to 2 in Round 4, which dramatically boosted average damage from 78.8 to 99.0 and win rate to 0.917, likely due to enhanced offensive power and faster positioning. The final enemy configuration, with high speed, attack bonus, and a moderate flank weight of 0.5, poses the greatest threat to players who are slow to reposition or fail to protect their flanks. A further improvement could be increasing the 'crit_chance' beyond 0.3, as it already showed minor positive impact when raised from 0.25 to 0.3 in Round 5, potentially amplifying damage output against vulnerable opponents.
 
-  Biggest impact : No policy change occurred; all parameters remained static.
-  Player weakness: Inexperienced players who struggle with predictable enemy movement.
+  Biggest impact : Increase in 'attack_bonus' to 5 and 'speed' to 2 in Round 4
+  Player weakness: Slow repositioning or failure to protect flanks
 
-  Win rate  : 0.083 → 0.083  (+0.000)
-  Avg damage: 72.0 → 72.0
-  Rounds run: 7
-  Final policy: {'speed': 1, 'attack_bonus': 0, 'crit_chance': 0.1, 'flank_weight': 0.0, 'burst_threshold': 0.0, 'retreat_hp_pct': 0.0}
+  Win rate  : 0.083 → 0.917  (+0.834)
+  Avg damage: 72.0 → 99.0
+  Rounds run: 5
+  Final policy: {'speed': 2, 'attack_bonus': 5, 'crit_chance': 0.3, 'flank_weight': 0.5, 'burst_threshold': 0.3, 'retreat_hp_pct': 0.0}
 
   Curve  → examples/enemy_learning_curve.png
   Graph  → examples/agent_graph_enemy_ai.png
   Results→ examples/enemy_ai_results.json
-  Time   : 127.4s
+  Time   : 112.4s
 ============================================================

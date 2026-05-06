@@ -8,6 +8,17 @@ Autonomous agents that plan, execute in parallel, critique each other, and synth
 
 ---
 
+## Documentation
+
+| Document | Description |
+|---|---|
+| [`docs/ReflectionAgents.pptx`](docs/ReflectionAgents.pptx) | Slide deck — framework overview, architecture, examples, and results |
+| [`instructions-agent-grok-ray.md`](instructions-agent-grok-ray.md) | Deep-dive guide: Grok API, Ray setup, all 11 examples |
+| [`instructions.md`](instructions.md) | Getting started and project structure |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribution guidelines |
+
+---
+
 ## Why This Project Exists
 
 This project was created to explore an idea: if modern AI tools can dramatically accelerate the way we design, run, and analyze complex computational experiments — such as quantum error correction simulations.
