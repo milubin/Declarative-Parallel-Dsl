@@ -732,9 +732,9 @@ def adaptive_enemy_loop():
                         fc["new_value"] = ov["new_value"]
                         print(f"    Override: {ov['param']} → {ov['new_value']}")
 
-        # Drop any change where the majority of critics voted to defer
-        deferred_params = {p for p, votes in defer_votes.items()
-                           if votes > total_critics / 2}
+        # Each change has exactly one assigned critic (via zip), so a single
+        # defer vote is the maximum possible — treat any defer vote as decisive.
+        deferred_params = set(defer_votes.keys())
         if deferred_params:
             for p in deferred_params:
                 print(f"    Deferred (majority critic vote): {p} — skipped this round")

@@ -24,92 +24,92 @@
       "round": 1,
       "policy": {
         "speed": 2,
-        "attack_bonus": 5,
-        "crit_chance": 0.2,
-        "flank_weight": 0.0,
+        "attack_bonus": 0,
+        "crit_chance": 0.25,
+        "flank_weight": 0.5,
         "burst_threshold": 0.0,
         "retreat_hp_pct": 0.0
       },
       "metrics": {
-        "win_rate": 0.833,
-        "avg_damage": 98.8,
-        "avg_turns": 12.2,
-        "avg_player_hp_end": 1.2,
+        "win_rate": 0.083,
+        "avg_damage": 78.8,
+        "avg_turns": 17.1,
+        "avg_player_hp_end": 21.2,
         "avg_crits": 0.0,
         "episodes": 12
       },
       "analyst_suggestions": [
         {
           "role": "Tactician",
-          "analysis": "The current win rate of 0.083 and average damage of 72.0 indicate that the enemy is not effectively capitalizing on attack opportunities or dealing significant damage. Increasing the attack_bonus will directly enhance damage output, while a higher crit_chance can create more impactful strikes to turn the tide of combat.",
+          "analysis": "As a Tactician focusing on attack timing, crit chance, and burst behavior, I note that the current win rate is extremely low at 0.083, and average damage output is insufficient to overpower the player before they can retaliate. The lack of critical hits and burst behavior suggests missed opportunities for decisive strikes when the player is vulnerable.",
           "suggestions": [
             {
-              "param": "attack_bonus",
-              "new_value": 5,
-              "reason": "Boosts raw damage output per hit to increase overall damage dealt and pressure the player more effectively."
+              "param": "crit_chance",
+              "new_value": 0.25,
+              "reason": "Increasing crit chance from 0.1 to 0.25 will significantly boost damage output through more frequent critical hits, helping to end fights faster."
             },
             {
-              "param": "crit_chance",
-              "new_value": 0.2,
-              "reason": "Increases the likelihood of critical hits, which can deal bonus damage and improve win potential in key moments."
+              "param": "burst_threshold",
+              "new_value": 0.3,
+              "reason": "Setting burst_threshold to 0.3 will enable sprinting for a finishing blow when player HP is low, capitalizing on their weakened state to secure more wins."
             }
           ],
           "confidence": 0.85,
-          "time": 11.86
+          "time": 10.14
         },
         {
           "role": "Pathfinder",
-          "analysis": "From a pathfinding perspective, the enemy's low win rate and average damage suggest that movement and positioning are not effectively pressuring the player. Increasing speed to close distance faster and introducing a moderate flank weight could improve positioning for attacks and increase damage output.",
+          "analysis": "From a movement optimization perspective, the enemy's low win rate and average damage suggest that they are not closing in on the player effectively or exploiting positional advantages. Increasing the speed to allow faster pursuit and introducing a moderate flank weight could improve the enemy's ability to engage and deal damage more consistently.",
           "suggestions": [
             {
               "param": "speed",
               "new_value": 2,
-              "reason": "Faster movement will allow the enemy to close in on the player quicker, reducing the time to engage and increasing damage opportunities."
+              "reason": "Increasing speed to 2 allows the enemy to close distance faster, improving pursuit and engagement opportunities."
             },
             {
               "param": "flank_weight",
               "new_value": 0.5,
-              "reason": "A moderate flank weight will encourage the enemy to seek advantageous positions, potentially catching the player off-guard and improving hit chances."
+              "reason": "A moderate flank weight of 0.5 encourages the enemy to seek advantageous positions, potentially increasing damage output through tactical movement."
             }
           ],
           "confidence": 0.85,
-          "time": 4.07
+          "time": 12.65
         },
         {
           "role": "Predictor",
-          "analysis": "Given the low win rate of 0.083 and average damage of 72.0, the enemy AI appears to be too passive and predictable, failing to pressure the player effectively. The player likely exploits straightforward chase patterns and maintains high HP, as seen in the avg_player_hp_end of 28.0.",
+          "analysis": "From the episode results, the enemy AI is struggling with a very low win rate and moderate damage output, suggesting the player is likely evading or outlasting the enemy. The lack of critical hits and low average player HP at the end indicate the enemy isn't capitalizing on opportunities to finish fights quickly.",
           "suggestions": [
             {
               "param": "speed",
               "new_value": 2,
-              "reason": "Increasing speed to 2 allows the enemy to close distance faster, reducing the player's ability to kite or escape."
-            },
-            {
-              "param": "flank_weight",
-              "new_value": 0.5,
-              "reason": "A moderate flank weight introduces unpredictability, making it harder for the player to anticipate enemy movement."
-            }
-          ],
-          "confidence": 0.75,
-          "time": 6.96
-        },
-        {
-          "role": "Historian",
-          "analysis": "From a historical perspective, the enemy's low win rate and moderate damage output suggest a lack of aggression and tactical adaptability in combat. The absence of critical hits and minimal strategic movement indicates that the enemy is not capitalizing on opportunities to overwhelm the player.",
-          "suggestions": [
-            {
-              "param": "attack_bonus",
-              "new_value": 5,
-              "reason": "Increasing attack bonus will boost damage output per hit, addressing the moderate average damage and improving win potential."
+              "reason": "Increasing speed to 2 allows the enemy to close distance faster, countering player evasion tactics and increasing engagement opportunities."
             },
             {
               "param": "crit_chance",
               "new_value": 0.2,
-              "reason": "Raising critical hit chance will introduce more impactful strikes, historically a key factor in turning battles in favor of aggressive combatants."
+              "reason": "Raising critical hit chance to 0.2 boosts damage potential per hit, helping to end fights quicker against a player with low HP at the end."
             }
           ],
           "confidence": 0.75,
-          "time": 12.02
+          "time": 9.31
+        },
+        {
+          "role": "Historian",
+          "analysis": "From a historical perspective, the low win rate of 0.083 and average damage of 72.0 suggest that the enemy lacks both aggression and tactical adaptability in combat. The absence of critical hits and minimal strategic movement indicates that the enemy is too predictable and fails to capitalize on opportunities to overwhelm the player.",
+          "suggestions": [
+            {
+              "param": "attack_bonus",
+              "new_value": 5,
+              "reason": "Increasing attack bonus will boost damage output per hit, addressing the low average damage and making the enemy more threatening in direct confrontations."
+            },
+            {
+              "param": "flank_weight",
+              "new_value": 0.5,
+              "reason": "Introducing a moderate flank weight will encourage the enemy to seek advantageous positions, making their movement less predictable and potentially increasing win rate through tactical surprise."
+            }
+          ],
+          "confidence": 0.75,
+          "time": 10.18
         }
       ],
       "navigator": {
@@ -117,45 +117,48 @@
           {
             "param": "speed",
             "new_value": 2,
-            "reason": "Increasing speed allows the enemy to close distance faster, reducing player kiting and increasing engagement opportunities."
-          },
-          {
-            "param": "attack_bonus",
-            "new_value": 5,
-            "reason": "Boosting attack bonus directly enhances damage output, addressing the low average damage and improving win potential."
+            "reason": "Increasing speed to 2 allows faster pursuit and engagement, addressing low win rate by countering player evasion, as suggested by Pathfinder and Predictor."
           },
           {
             "param": "crit_chance",
-            "new_value": 0.2,
-            "reason": "Higher critical hit chance introduces impactful strikes, potentially turning battles in key moments."
+            "new_value": 0.25,
+            "reason": "Raising crit chance to 0.25 boosts damage output through frequent critical hits, helping to end fights faster, as strongly recommended by Tactician."
+          },
+          {
+            "param": "flank_weight",
+            "new_value": 0.5,
+            "reason": "Introducing a moderate flank weight encourages tactical positioning, increasing damage potential and unpredictability, as supported by Pathfinder and Historian."
           }
         ],
-        "rationale": "Focus on increasing speed for better engagement, attack_bonus for raw damage, and crit_chance for high-impact hits to pressure the player effectively.",
+        "rationale": "Focus on speed, crit chance, and flank weight to improve engagement, damage output, and tactical adaptability, targeting the low win rate of 0.083. These changes balance multiple agent insights for maximum impact.",
         "confidence": 0.8,
         "stop": false,
-        "time": 3.12
+        "time": 7.45
       },
       "critiques": [
         {
           "critic": "Critic-Tactician",
           "verdict": "modify",
-          "comment": "The speed increase is well-reasoned to reduce kiting and boost engagement, but attribution risk is high with three simultaneous changes (speed, attack_bonus, crit_chance); deferring this change to a later round would help isolate its impact on win rate.",
+          "comment": "The speed increase to 2 is well-reasoned to counter player evasion, but attribution risk is high with 3 simultaneous changes; deferring this change would help isolate effects of crit_chance and flank_weight.",
           "override": null,
-          "time": 3.31
+          "defer": true,
+          "time": 2.35
         },
         {
           "critic": "Critic-Pathfinder",
           "verdict": "modify",
-          "comment": "The attack_bonus increase is well-reasoned to address low damage, but attribution risk is high with three concurrent changes (attack_bonus, speed, crit_chance); defer this change to isolate effects.",
+          "comment": "The crit_chance increase to 0.25 is reasonable to boost damage output, but attribution risk is high with 3 simultaneous changes (crit_chance, speed, flank_weight).",
           "override": null,
-          "time": 3.28
+          "defer": true,
+          "time": 3.67
         },
         {
           "critic": "Critic-Predictor",
           "verdict": "modify",
-          "comment": "The increase in crit_chance to 0.2 is reasonable for introducing impactful strikes, but attribution risk is high with three simultaneous changes (crit_chance, speed, attack_bonus); defer this change to a later round for clearer impact analysis.",
+          "comment": "The flank_weight change is well-reasoned to improve tactical positioning, but high attribution risk from three simultaneous changes justifies deferring to isolate effects.",
           "override": null,
-          "time": 3.33
+          "defer": true,
+          "time": 1.96
         }
       ],
       "navigator_confidence": 0.8
@@ -165,15 +168,158 @@
       "policy": {
         "speed": 2,
         "attack_bonus": 5,
-        "crit_chance": 0.3,
-        "flank_weight": 0.0,
+        "crit_chance": 0.35,
+        "flank_weight": 0.5,
         "burst_threshold": 0.3,
+        "retreat_hp_pct": 0.0
+      },
+      "metrics": {
+        "win_rate": 0.917,
+        "avg_damage": 99.0,
+        "avg_turns": 16.1,
+        "avg_player_hp_end": 1.0,
+        "avg_crits": 0.0,
+        "episodes": 12
+      },
+      "analyst_suggestions": [
+        {
+          "role": "Tactician",
+          "analysis": "As a Tactician, I observe that the enemy's win rate and average damage are low, suggesting insufficient aggression and poor timing in attacks. The lack of critical hits indicates that the crit_chance is not effectively contributing to burst damage potential. Adjusting crit_chance and introducing a burst_threshold could improve damage output and capitalize on player vulnerabilities.",
+          "suggestions": [
+            {
+              "param": "crit_chance",
+              "new_value": 0.35,
+              "reason": "Increasing crit_chance to the maximum will enhance damage potential per hit, compensating for low win rates by making each attack more impactful."
+            },
+            {
+              "param": "burst_threshold",
+              "new_value": 0.3,
+              "reason": "Setting a burst_threshold will enable the enemy to sprint and close distance for a finishing blow when the player's HP is low, improving win rate through timely aggression."
+            }
+          ],
+          "confidence": 0.85,
+          "time": 10.97
+        },
+        {
+          "role": "Pathfinder",
+          "analysis": "From a movement optimization perspective, the enemy's low win rate and moderate damage output suggest insufficient aggression and poor positioning. Increasing the flank_weight will encourage more strategic movement to gain positional advantage, while a small burst_threshold will enable faster closing on weakened players to secure kills.",
+          "suggestions": [
+            {
+              "param": "flank_weight",
+              "new_value": 0.8,
+              "reason": "Higher flanking priority will improve positioning for attacks, potentially increasing damage and win rate by exploiting player vulnerabilities."
+            },
+            {
+              "param": "burst_threshold",
+              "new_value": 0.3,
+              "reason": "Enabling a burst of speed when player HP is below 30% will allow the enemy to close distance and finish off weakened targets more effectively."
+            }
+          ],
+          "confidence": 0.75,
+          "time": 7.05
+        },
+        {
+          "role": "Predictor",
+          "analysis": "Given the low win rate of 0.083 and moderate average damage of 78.8, the enemy AI appears to lack sufficient aggression and tactical adaptability against the player. The absence of critical hits (avg_crits=0.0) suggests that the current crit_chance may not be triggering effectively, and the enemy might not be closing in fast enough or exploiting player weaknesses.",
+          "suggestions": [
+            {
+              "param": "attack_bonus",
+              "new_value": 5,
+              "reason": "Increasing attack_bonus will boost raw damage output per hit, helping to pressure the player more effectively and potentially increase win rate."
+            },
+            {
+              "param": "crit_chance",
+              "new_value": 0.35,
+              "reason": "Maximizing crit_chance to the upper limit should increase the frequency of critical hits, adding burst damage potential to capitalize on player mistakes."
+            }
+          ],
+          "confidence": 0.75,
+          "time": 7.73
+        },
+        {
+          "role": "Historian",
+          "analysis": "From a historical perspective, the consistently low win rate of 0.083 across rounds suggests that the enemy lacks the aggression and tactical adaptability needed to overcome the player. The minimal critical hits and unchanged damage output indicate that the enemy is not capitalizing on opportunities to deal decisive blows.",
+          "suggestions": [
+            {
+              "param": "attack_bonus",
+              "new_value": 5,
+              "reason": "Increasing attack bonus will boost damage output per hit, addressing the stagnant average damage and potentially increasing win rate by making each attack more threatening."
+            },
+            {
+              "param": "crit_chance",
+              "new_value": 0.3,
+              "reason": "Raising critical hit chance will introduce more high-damage strikes, historically a key factor in turning battles, as seen in past data with zero average crits."
+            }
+          ],
+          "confidence": 0.75,
+          "time": 10.34
+        }
+      ],
+      "navigator": {
+        "apply": [
+          {
+            "param": "crit_chance",
+            "new_value": 0.35,
+            "reason": "Highest consensus among agents to increase damage potential per hit, addressing the current lack of critical hits (avg_crits=0.0) and low win rate."
+          },
+          {
+            "param": "burst_threshold",
+            "new_value": 0.3,
+            "reason": "Supported by Tactician and Pathfinder to enable timely aggression by closing distance on weakened players, improving kill potential."
+          },
+          {
+            "param": "attack_bonus",
+            "new_value": 5,
+            "reason": "Backed by Predictor and Historian to boost raw damage output, compensating for low average damage and win rate."
+          }
+        ],
+        "rationale": "Focus on increasing damage output via crit_chance and attack_bonus while adding burst_threshold for tactical aggression to improve win rate significantly.",
+        "confidence": 0.8,
+        "stop": false,
+        "time": 14.69
+      },
+      "critiques": [
+        {
+          "critic": "Critic-Tactician",
+          "verdict": "modify",
+          "comment": "The increase in crit_chance from 0.25 to 0.35 is reasonable given the current lack of critical hits, but attribution risk is high with three simultaneous changes; deferring is necessary to isolate effects.",
+          "override": null,
+          "defer": true,
+          "time": 1.66
+        },
+        {
+          "critic": "Critic-Pathfinder",
+          "verdict": "modify",
+          "comment": "The burst_threshold change to 0.3 is reasonable for enabling timely aggression, but attribution risk is high with three simultaneous changes; deferring this change is necessary to isolate effects of crit_chance and attack_bonus.",
+          "override": null,
+          "defer": true,
+          "time": 2.2
+        },
+        {
+          "critic": "Critic-Predictor",
+          "verdict": "modify",
+          "comment": "The attack_bonus increase is reasonable to address low damage and win rate, but attribution risk is high with three concurrent changes.",
+          "override": null,
+          "defer": true,
+          "time": 1.32
+        }
+      ],
+      "navigator_confidence": 0.8
+    },
+    {
+      "round": 3,
+      "policy": {
+        "speed": 2,
+        "attack_bonus": 5,
+        "crit_chance": 0.35,
+        "flank_weight": 0.7,
+        "burst_threshold": 0.4,
         "retreat_hp_pct": 0.0
       },
       "metrics": {
         "win_rate": 1.0,
         "avg_damage": 100.0,
-        "avg_turns": 12.1,
+        "avg_turns": 19.6,
         "avg_player_hp_end": 0.0,
         "avg_crits": 0.0,
         "episodes": 12
@@ -181,129 +327,126 @@
       "analyst_suggestions": [
         {
           "role": "Tactician",
-          "analysis": "As a Tactician, I note that the win rate is strong at 0.833, but the average damage and critical hits are not maximized, indicating room for improved aggression. The current burst_threshold of 0.0 means enemies miss opportunities to capitalize on weakened players, and the crit_chance of 0.2 could be higher to boost damage output.",
+          "analysis": "Given the high win rate of 0.917 and average damage of 99.0, the enemy is performing well, but there is room to push damage output and secure more decisive victories. The current crit_chance is at its maximum of 0.35, yet avg_crits is 0.0, suggesting a data anomaly or underutilization, so we should maintain it while focusing on burst behavior to capitalize on player vulnerability.",
           "suggestions": [
             {
               "param": "burst_threshold",
-              "new_value": 0.3,
-              "reason": "Enabling burst behavior when player HP is below 30% will allow enemies to close in and finish fights faster, increasing win rate and damage."
-            },
-            {
-              "param": "crit_chance",
-              "new_value": 0.3,
-              "reason": "Increasing crit chance from 0.2 to 0.3 will enhance damage potential per attack, leveraging the high win rate to secure more decisive victories."
-            }
-          ],
-          "confidence": 0.85,
-          "time": 9.37
-        },
-        {
-          "role": "Pathfinder",
-          "analysis": "From a movement optimization perspective, the enemy's high win rate suggests effective aggression, but the lack of critical hits and low player HP at the end indicates potential for more strategic positioning. Introducing a moderate flank_weight could allow the enemy to exploit player vulnerabilities by approaching from less defended angles, potentially increasing damage output and securing more decisive victories.",
-          "suggestions": [
-            {
-              "param": "flank_weight",
-              "new_value": 0.5,
-              "reason": "Encourages the enemy to attempt flanking maneuvers, which could lead to higher damage by targeting weaker player positions and improving overall combat effectiveness."
+              "new_value": 0.4,
+              "reason": "Increasing burst_threshold to 0.4 will trigger sprinting more often when the player is at moderate HP, allowing faster closure to deal finishing blows and potentially increase damage output."
             }
           ],
           "confidence": 0.75,
-          "time": 6.56
+          "time": 7.6
+        },
+        {
+          "role": "Pathfinder",
+          "analysis": "From a movement optimization perspective, the high win rate of 0.917 suggests the enemy is effective, but the lack of critical hits and low player HP at the end indicate missed opportunities for faster kills. Adjusting the flank_weight could improve positioning for higher damage output, and introducing a small retreat_hp_pct could preserve the enemy for more strategic engagements.",
+          "suggestions": [
+            {
+              "param": "flank_weight",
+              "new_value": 0.7,
+              "reason": "Increasing flank_weight from 0.5 to 0.7 will prioritize better positioning for attacks, potentially increasing damage and securing faster wins."
+            },
+            {
+              "param": "retreat_hp_pct",
+              "new_value": 0.2,
+              "reason": "Setting retreat_hp_pct to 0.2 allows the enemy to retreat at low HP, preserving itself for tactical repositioning and avoiding unnecessary losses."
+            }
+          ],
+          "confidence": 0.85,
+          "time": 7.72
         },
         {
           "role": "Predictor",
-          "analysis": "Given the high win rate of 0.833 and significant average damage of 98.8, the enemy AI is performing well, but the lack of critical hits (avg_crits=0.0) suggests missed opportunities for burst damage. The player often survives with minimal HP (avg_player_hp_end=1.2), indicating potential to close fights faster with increased aggression.",
+          "analysis": "Given the high win rate of 0.917 and average damage of 99.0, the enemy AI is performing well, but there is room to optimize damage output and ensure consistent victories. The lack of critical hits (avg_crits=0.0) suggests that the crit_chance may not be triggering effectively, potentially missing opportunities for burst damage.",
           "suggestions": [
             {
               "param": "crit_chance",
-              "new_value": 0.3,
-              "reason": "Increasing critical hit chance from 0.2 to 0.3 will likely result in more frequent burst damage, finishing low-HP players quicker and boosting win rate."
+              "new_value": 0.35,
+              "reason": "Maintaining the maximum crit_chance ensures higher potential for burst damage, capitalizing on opportunities to end fights faster."
             },
             {
               "param": "burst_threshold",
-              "new_value": 0.3,
-              "reason": "Setting burst_threshold to 0.3 will trigger sprinting when player HP is low, ensuring faster closure on weakened targets to secure kills."
+              "new_value": 0.4,
+              "reason": "Increasing burst_threshold to 0.4 allows the enemy to sprint more aggressively when the player is at moderate health, closing in for decisive strikes."
             }
           ],
           "confidence": 0.85,
-          "time": 7.32
+          "time": 11.17
         },
         {
           "role": "Historian",
-          "analysis": "From a historical perspective, the significant jump in win rate from 0.083 to 0.833 between rounds 0 and 1 suggests that the current aggressive parameters, particularly the high attack bonus and speed, are effective in overpowering the player quickly. However, the lack of critical hits and minimal player HP at the end indicates potential for further optimization in damage output through tactical adjustments.",
+          "analysis": "From a historical perspective, the dramatic increase in win_rate from 0.083 to 0.917 in Round 2 correlates with prior adjustments likely favoring aggression and speed, as seen in the reduced average turns and higher damage output. The current high win_rate and damage suggest the enemy is close to optimal performance, but the lack of critical hits indicates an opportunity to exploit this mechanic further.",
           "suggestions": [
             {
               "param": "crit_chance",
-              "new_value": 0.3,
-              "reason": "Increasing critical hit chance will likely boost average damage per encounter, capitalizing on the enemy's already high win rate by ensuring more decisive strikes."
-            },
-            {
-              "param": "flank_weight",
-              "new_value": 0.5,
-              "reason": "Introducing a moderate flanking strategy could exploit player positioning weaknesses, potentially increasing damage output and maintaining pressure."
+              "new_value": 0.35,
+              "reason": "Maximizing crit_chance to 0.35, as it currently shows 0.0 average crits per episode, could push damage output higher by capitalizing on critical hit potential."
             }
           ],
           "confidence": 0.85,
-          "time": 9.49
+          "time": 5.75
         }
       ],
       "navigator": {
         "apply": [
           {
-            "param": "crit_chance",
-            "new_value": 0.3,
-            "reason": "Increasing critical hit chance is a high-impact change supported by multiple agents (Tactician, Predictor, Historian) to boost damage output and finish fights faster."
+            "param": "burst_threshold",
+            "new_value": 0.4,
+            "reason": "Increasing burst_threshold to 0.4 will encourage more aggressive sprints when the player is at moderate HP, potentially increasing damage output and securing faster wins, as supported by Tactician and Predictor."
           },
           {
-            "param": "burst_threshold",
-            "new_value": 0.3,
-            "reason": "Setting burst threshold to 0.3, as suggested by Tactician and Predictor, will enable enemies to close in on low-HP players, improving win rate and reducing avg_turns."
+            "param": "flank_weight",
+            "new_value": 0.7,
+            "reason": "Raising flank_weight to 0.7 prioritizes better positioning for attacks, which could lead to higher damage and faster victories, as suggested by Pathfinder."
           }
         ],
-        "rationale": "Focus on enhancing damage potential and aggression with crit_chance and burst_threshold to capitalize on the high win rate and close fights faster.",
-        "confidence": 0.88,
+        "rationale": "Focus on enhancing aggression and positioning to capitalize on the high win rate and push for faster, more decisive victories.",
+        "confidence": 0.8,
         "stop": true,
-        "time": 5.39
+        "time": 9.33
       },
       "critiques": [
         {
           "critic": "Critic-Tactician",
           "verdict": "modify",
-          "comment": "The increase in crit_chance from 0.2 to 0.3 is reasonable to boost damage output, but attribution risk is high due to simultaneous burst_threshold change; deferring this change to a later round would help isolate effects.",
+          "comment": "The proposed increase in burst_threshold to 0.4 is reasonable for encouraging aggression, but attribution risk is high due to simultaneous flank_weight change.",
           "override": null,
-          "time": 2.83
+          "defer": true,
+          "time": 2.47
         },
         {
           "critic": "Critic-Pathfinder",
           "verdict": "modify",
-          "comment": "The proposed burst_threshold change to 0.3 is reasonable to encourage closing in on low-HP players, but attribution risk is high due to simultaneous crit_chance change; deferring this change to a later round is recommended to isolate effects.",
+          "comment": "The change to flank_weight is well-reasoned for improving positioning and damage, but attribution risk is high with burst_threshold changing simultaneously.",
           "override": null,
-          "time": 2.84
+          "defer": true,
+          "time": 2.62
         }
       ],
-      "navigator_confidence": 0.88
+      "navigator_confidence": 0.8
     }
   ],
   "final_policy": {
     "speed": 2,
     "attack_bonus": 5,
-    "crit_chance": 0.3,
-    "flank_weight": 0.0,
-    "burst_threshold": 0.3,
+    "crit_chance": 0.35,
+    "flank_weight": 0.7,
+    "burst_threshold": 0.4,
     "retreat_hp_pct": 0.0
   },
   "final_metrics": {
     "win_rate": 1.0,
     "avg_damage": 100.0,
-    "avg_turns": 12.1,
+    "avg_turns": 19.6,
     "avg_player_hp_end": 0.0,
     "avg_crits": 0.0,
     "episodes": 12
   },
   "report": {
-    "report": "The adaptive enemy AI in the dungeon RPG experiment demonstrated remarkable improvement, with its win rate increasing from 0.083 in Round 0 to 1.0 by Round 2, reflecting a complete dominance over opponents. The most significant policy changes were the increase in 'speed' from 1 to 2 and 'crit_chance' from 0.1 to 0.3, as these likely enhanced the enemy's ability to close distance quickly and deal decisive damage, directly correlating with the sharp rise in average damage from 72.0 to 100.0. Additionally, the introduction of a 'burst_threshold' of 0.3 in Round 2 suggests a tactical shift to capitalize on critical moments, further boosting effectiveness. This final enemy configuration is most dangerous against players who are slow to react or lack defensive strategies, as the high speed and critical hit potential can overwhelm unprepared opponents. One further improvement could be a slight increase in 'attack_bonus' beyond 5, as this parameter already showed a positive impact on damage output when raised from 0 to 5, potentially making the enemy even more lethal in direct confrontations.",
-    "biggest_impact": "Increase in 'speed' from 1 to 2 and 'crit_chance' from 0.1 to 0.3",
-    "player_weakness": "Slow-reacting players or those without strong defensive strategies",
-    "time": 12.1
+    "report": "The adaptive enemy AI in the dungeon RPG experiment demonstrated remarkable improvement, with its win rate increasing from 0.083 in Round 0 to a perfect 1.0 by Round 3, reflecting a dramatic enhancement in effectiveness. The most impactful parameter changes were the increase in 'crit_chance' from 0.1 to 0.35 and the addition of 'attack_bonus' to 5 by Round 2, as these directly boosted damage output (average damage rose from 72.0 to 100.0) and contributed significantly to the win rate surge. Additionally, the 'flank_weight' adjustment to 0.7 and 'burst_threshold' to 0.4 refined the AI\u2019s tactical positioning and attack timing, further solidifying its dominance. This final enemy configuration is most dangerous against players who rely on static positioning or predictable movement, as the high flank weight exploits poor spatial awareness. A potential further improvement could be fine-tuning the 'burst_threshold' to a slightly higher value, such as 0.5, to optimize damage delivery against high-health opponents, building on the observed effectiveness of burst mechanics in later rounds.",
+    "biggest_impact": "Increase in 'crit_chance' from 0.1 to 0.35 and 'attack_bonus' to 5",
+    "player_weakness": "Players with static positioning or predictable movement",
+    "time": 32.31
   }
 }
